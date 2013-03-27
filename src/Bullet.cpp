@@ -7,7 +7,7 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(float bodyDimY, float endY)
+Bullet::Bullet(float bodyDimY, float topWorld, float bottomWorld)
 {
 	this->bodyDimY = bodyDimY;
 	shot = false;
@@ -18,7 +18,9 @@ Bullet::Bullet(float bodyDimY, float endY)
 	oldShiftZ = 0.0f;
 	oldGunRotation = 0.0f;
 
-	this->endY = endY;
+	this->topWorld = topWorld;
+	this->bottomWorld = bottomWorld;
+
 	bulletPos = 0.0f;
 	bulletSpeed = 0.0f;
 }
@@ -52,18 +54,23 @@ bool Bullet::isFirstTime()
 	return firstTime;
 }
 
-//Draws Bullet
+//Draws the Bullet
 bool Bullet::draw()
 {
 	if(!shot)
-		return false;
-
-	bulletPos += bulletSpeed;
+		return false;	
 
 	float bodyPosX = 0.0f;
 	float bodyPosY1 = 0.0f + bulletPos;
 	float bodyPosY2 = bodyPosY1 + bodyDimY;
 	float bodyPosZ = 0.0f;
+
+	if(bodyPosY2*cos(fabs(2*M_PI*oldGunRotation/360)) >= (topWorld - bottomWorld)) //the player is in bottomWorld position (distance from top of the world is topWorld - bottomWorld)
+	{
+		shot = false;
+		bulletPos = 0.0f;
+		return false;
+	}
 
 	glPushMatrix();
 		glTranslatef(oldShiftX, oldShiftY, oldShiftZ);
@@ -76,12 +83,7 @@ bool Bullet::draw()
 		glEnd();
 	glPopMatrix();
 
-	if(bodyPosY2*cos(fabs(2*M_PI*oldGunRotation/360)) >= 2*endY) //the player is in -endY position (distance from top of the world is 2*endY)
-	{
-		shot = false;
-		bulletPos = 0.0f;
-		return false;
-	}
+	bulletPos += bulletSpeed;
 
 	return true;
 }

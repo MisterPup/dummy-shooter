@@ -29,10 +29,11 @@ class Bullet
 		float bulletPos;
 		float bulletSpeed;
 
-		float endY;
+		float topWorld;
+		float bottomWorld;
 
 	public:
-		Bullet(float bodyDimY, float endY);
+		Bullet(float bodyDimY, float topWorld, float bottomWorld);
 		virtual ~Bullet();
 
 		float getBodyDimY();

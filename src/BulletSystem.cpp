@@ -7,15 +7,15 @@
 
 #include "BulletSystem.h"
 
-BulletSystem::BulletSystem(int numBullets, float bodyDimY, float endY)
+BulletSystem::BulletSystem(int numBullets, float bulletDimY, float topWorld, float bottomWorld)
 {
 	this->numBullets = numBullets;
-	this->bulletDimY = bodyDimY;
+	this->bulletDimY = bulletDimY;
 	index = 0;
 
 	for(int i = 0; i < numBullets; i++)
 	{
-		Bullet newBullet(bulletDimY, endY);
+		Bullet newBullet(bulletDimY, topWorld, bottomWorld);
 		bullets.push_back(newBullet);
 	}
 }

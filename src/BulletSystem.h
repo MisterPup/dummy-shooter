@@ -22,7 +22,7 @@ class BulletSystem
 		int index;
 
 	public:
-		BulletSystem(int numBullets, float bulletDimY, float endY);
+		BulletSystem(int numBullets, float bulletDimY, float topWorld, float bottomWorld);
 		virtual ~BulletSystem();
 
 		void fire(float shiftX, float shiftY, float shiftZ, float gunRotation, float bulletSpeed);

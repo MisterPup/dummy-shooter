@@ -1,3 +1,10 @@
+/*
+ * BulletSystem.cpp
+ *
+ *  Created on: 25/mar/2013
+ *      Author: misterpup
+ */
+
 #include <iostream>
 #include <stdlib.h>
 #include <math.h>
@@ -9,24 +16,32 @@
 
 using namespace std;
 
-int screenX = 640;
-int screenY = 400;
+//Window dimensions
+int screenX = 1024;
+int screenY = 768;
 
+//Position of player (except shiftY)
 float shiftX = 0.0f;
 float shiftY = 0.0f;
 float shiftZ = 0.0f;
 float gunRotation = 0.0;
 
+//Update time
 int FPS = 30;
 float updateTime = 1000/(float)FPS;
 
+//Bullet
+BulletSystem* bulletSystem;
 float bulletDimY = 0.1f;
 float bulletSpeed = 0.1f;
-int numBullets = 10;
+int numBullets = 5;
 
-BulletSystem* bulletSystem;
+//World boundaries
+const float topWorld = 2.0f;
+const float bottomWorld = -topWorld;
 
-const float endY = 2.0f; //top of the world
+//Gun Rotation Limits
+const float rotationsLimit = 45.0f;
 
 //Called when a special key is pressed
 void handleSpecialKeyPress(int key, int x, int y) 
@@ -34,10 +49,12 @@ void handleSpecialKeyPress(int key, int x, int y)
 	switch (key) 
 	{	
 		case GLUT_KEY_LEFT: //a
-			gunRotation -= 6.0f;
+			if(gunRotation >= -rotationsLimit)
+				gunRotation -= 6.0f;
 			break;
 		case GLUT_KEY_RIGHT: //d
-			gunRotation += 6.0f;
+			if(gunRotation <= rotationsLimit)
+				gunRotation += 6.0f;
 			break;
 	}
 }
@@ -81,7 +98,7 @@ void initRendering()
 
 void initObject()
 {
-	bulletSystem = new BulletSystem(numBullets, bulletDimY, endY);
+	bulletSystem = new BulletSystem(numBullets, bulletDimY, topWorld, bottomWorld);
 }
 
 //Called when the window is resized
@@ -126,12 +143,12 @@ void drawBoundariesOfWorld()
 {
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(-10.0f, endY, 0.0f);
-	glVertex3f(10.0f, endY, 0.0f);
+	glVertex3f(-10.0f, topWorld, 0.0f);
+	glVertex3f(10.0f, topWorld, 0.0f);
 
 	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(-10.0f, -endY, 0.0f);
-	glVertex3f(10.0f, -endY, 0.0f);
+	glVertex3f(-10.0f, bottomWorld, 0.0f);
+	glVertex3f(10.0f, bottomWorld, 0.0f);
 
 	glEnd();
 }
@@ -145,18 +162,19 @@ void drawScene()
 	glMatrixMode(GL_MODELVIEW); //Switch to the drawing perspective
 	glLoadIdentity(); //Reset the drawing perspective
 
-	gluLookAt(  0.0, 0.0, -6.0,		// eye position //5.0, 3.0, -6.0 per vedere tutti gli assi
+	gluLookAt(  0.0, 0.0, -6.0,		// eye position
 				0.0, 0.0, 0.0,		// center
 				0.0, 1.0, 0.0);		// vector UP
 
 	drawBoundariesOfWorld();
 
-	//Player
+
+	/******Player******/
 	glColor3f(0.0f, 1.0f, 0.5f);
 	float bodyDimX = 1.0f;
 	float bodyDimY = 0.2f;
 
-	shiftY = -endY + bodyDimY/2.0f;
+	shiftY = bottomWorld + bodyDimY/2.0f; //when the bullet is fired, the y axis needs to be set between the gun and the player (for rotation purpose - look at bullet's draw code)
 
 	float gunDimX = 0.2f;
 	float gunDimY = 0.3f;
@@ -164,16 +182,19 @@ void drawScene()
 	Player2D player1(bodyDimX, bodyDimY, gunDimX, gunDimY);
 
 	glPushMatrix();
-		glTranslatef(shiftX, -endY, shiftZ);
+		glTranslatef(shiftX, bottomWorld, shiftZ);
 		player1.draw(gunRotation);
 	glPopMatrix();
+	/******Player******/
 
-	//Bullet
+
+	/******Bullet******/
 	glColor3f(0.0, 1.0, 0.0);
 
 	glPushMatrix();
 		bulletSystem->draw();
 	glPopMatrix();
+	/******Bullet******/
 
 	glutSwapBuffers(); //Send the 3D scene to the screen
 }
