@@ -7,7 +7,7 @@
 
 #include "BulletSystem.h"
 
-BulletSystem::BulletSystem(int numBullets, float bulletDimY, float topWorld, float bottomWorld)
+BulletSystem::BulletSystem(int numBullets, float bulletDimY, float worldBoundaries[4])
 {
 	this->numBullets = numBullets;
 	this->bulletDimY = bulletDimY;
@@ -15,7 +15,7 @@ BulletSystem::BulletSystem(int numBullets, float bulletDimY, float topWorld, flo
 
 	for(int i = 0; i < numBullets; i++)
 	{
-		Bullet newBullet(bulletDimY, topWorld, bottomWorld);
+		Bullet newBullet(bulletDimY, worldBoundaries);
 		bullets.push_back(newBullet);
 	}
 }

@@ -7,7 +7,7 @@
 
 #include "Bullet.h"
 
-Bullet::Bullet(float bodyDimY, float topWorld, float bottomWorld)
+Bullet::Bullet(float bodyDimY, float worldBoundaries[4])
 {
 	this->bodyDimY = bodyDimY;
 	shot = false;
@@ -18,8 +18,10 @@ Bullet::Bullet(float bodyDimY, float topWorld, float bottomWorld)
 	oldShiftZ = 0.0f;
 	oldGunRotation = 0.0f;
 
-	this->topWorld = topWorld;
-	this->bottomWorld = bottomWorld;
+	this->topWorld = worldBoundaries[0];
+	this->bottomWorld = worldBoundaries[1];
+	this->westWorld = worldBoundaries[2];
+	this->eastWorld = worldBoundaries[3];
 
 	bulletPos = 0.0f;
 	bulletSpeed = 0.0f;
@@ -65,7 +67,12 @@ bool Bullet::draw()
 	float bodyPosY2 = bodyPosY1 + bodyDimY;
 	float bodyPosZ = 0.0f;
 
-	if(bodyPosY2*cos(fabs(2*M_PI*oldGunRotation/360)) >= (topWorld - bottomWorld)) //the player is in bottomWorld position (distance from top of the world is topWorld - bottomWorld)
+	float radAngle = 2*M_PI*oldGunRotation/360;
+	float bulletAbsoluteCoordYPos = bodyPosY2*cos(fabs(radAngle));
+	float absBulletAbsoluteCoordXPos = fabs(bodyPosY2*sin(radAngle));
+
+	if(bulletAbsoluteCoordYPos >= (topWorld - bottomWorld)
+	|| absBulletAbsoluteCoordXPos > fabs(westWorld - oldShiftX) || absBulletAbsoluteCoordXPos > fabs(eastWorld - oldShiftX)) //two condition in case east != -west
 	{
 		shot = false;
 		bulletPos = 0.0f;

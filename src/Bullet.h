@@ -31,9 +31,11 @@ class Bullet
 
 		float topWorld;
 		float bottomWorld;
+		float westWorld;
+		float eastWorld;		
 
 	public:
-		Bullet(float bodyDimY, float topWorld, float bottomWorld);
+		Bullet(float bodyDimY, float worldBoundaries[4]);
 		virtual ~Bullet();
 
 		float getBodyDimY();

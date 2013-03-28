@@ -37,8 +37,12 @@ float bulletSpeed = 0.1f;
 int numBullets = 5;
 
 //World boundaries
-const float topWorld = 2.0f;
+const float topWorld = 4.0f;
 const float bottomWorld = -topWorld;
+const float westWorld = 5.0f;
+const float eastWorld = -westWorld;
+
+float worldBoundaries[4] = {topWorld, bottomWorld, westWorld, eastWorld};
 
 //Gun Rotation Limits
 const float rotationsLimit = 45.0f;
@@ -57,6 +61,7 @@ void handleSpecialKeyPress(int key, int x, int y)
 				gunRotation += 6.0f;
 			break;
 	}
+	//glutPostRedisplay();
 }
 
 //Called when a key is pressed
@@ -78,7 +83,7 @@ void handleKeypress(unsigned char key, //The key that was pressed
 			bulletSystem->fire(shiftX, shiftY, shiftZ, gunRotation, bulletSpeed);
 			break;
 	}
-	glutPostRedisplay();	
+	//glutPostRedisplay();	
 }
 
 void handleMousePress(int button, int state, int x, int y)
@@ -98,7 +103,7 @@ void initRendering()
 
 void initObject()
 {
-	bulletSystem = new BulletSystem(numBullets, bulletDimY, topWorld, bottomWorld);
+	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
 }
 
 //Called when the window is resized
@@ -143,12 +148,20 @@ void drawBoundariesOfWorld()
 {
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(-10.0f, topWorld, 0.0f);
-	glVertex3f(10.0f, topWorld, 0.0f);
+	glVertex3f(eastWorld, topWorld, 0.0f);
+	glVertex3f(westWorld, topWorld, 0.0f);
 
 	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(-10.0f, bottomWorld, 0.0f);
-	glVertex3f(10.0f, bottomWorld, 0.0f);
+	glVertex3f(eastWorld, bottomWorld, 0.0f);
+	glVertex3f(westWorld, bottomWorld, 0.0f);
+	
+	glColor3f(0.0, 0.0, 1.0); //red
+	glVertex3f(westWorld, bottomWorld, 0.0f);
+	glVertex3f(westWorld, topWorld, 0.0f);
+
+	glColor3f(0.0, 0.0, 1.0); //red
+	glVertex3f(eastWorld, bottomWorld, 0.0f);
+	glVertex3f(eastWorld, topWorld, 0.0f);
 
 	glEnd();
 }
@@ -162,7 +175,7 @@ void drawScene()
 	glMatrixMode(GL_MODELVIEW); //Switch to the drawing perspective
 	glLoadIdentity(); //Reset the drawing perspective
 
-	gluLookAt(  0.0, 0.0, -6.0,		// eye position
+	gluLookAt(  0.0, 0.0, -15.0,		// eye position
 				0.0, 0.0, 0.0,		// center
 				0.0, 1.0, 0.0);		// vector UP
 
