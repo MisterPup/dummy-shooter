@@ -61,7 +61,7 @@ void handleSpecialKeyPress(int key, int x, int y)
 				gunRotation += 6.0f;
 			break;
 	}
-	//glutPostRedisplay();
+	//we must not call here glutPostRedisplay because it will increase FPS above the set threshold
 }
 
 //Called when a key is pressed
@@ -83,7 +83,7 @@ void handleKeypress(unsigned char key, //The key that was pressed
 			bulletSystem->fire(shiftX, shiftY, shiftZ, gunRotation, bulletSpeed);
 			break;
 	}
-	//glutPostRedisplay();	
+	//we must not call here glutPostRedisplay because it will increase FPS above the set threshold
 }
 
 void handleMousePress(int button, int state, int x, int y)
