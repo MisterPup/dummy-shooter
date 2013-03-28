@@ -42,7 +42,13 @@ void handleKeypress(unsigned char key, //The key that was pressed
 	{	
 		case 27: //Escape key
 			exit(0); //Exit the program
-			break;		
+			break;
+		case 119: //w
+			shift_temp += 0.1f;			
+			break;
+		case 115: //s
+			shift_temp -= 0.1f;
+			break;
 		case 97: //a
 			if(shiftX + bodyDimX <= westWorld)
 				shiftX += westWorld/10; //it should be a divisor of westWorld
