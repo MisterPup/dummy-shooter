@@ -33,6 +33,8 @@ float shiftY = bottomWorld + bodyDimY/2.0f; //when the bullet is fired, the y ax
 float shiftZ = 0.0f;
 float gunRotation = 0.0;
 
+float shift_temp = 0.0f;
+
 //Bullet
 BulletSystem* bulletSystem;
 float bulletDimY = 0.1f;
