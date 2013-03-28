@@ -158,6 +158,9 @@ void drawAxis(float length_x, float length_y, float length_z)
 
 void drawBoundariesOfWorld()
 {
+	float lineWidth = 3.0f;
+	glLineWidth(lineWidth);
+
 	glBegin(GL_LINES);
 	glColor3f(0.0, 0.0, 1.0); //blue
 	glVertex3f(eastWorld, topWorld, 0.0f);
