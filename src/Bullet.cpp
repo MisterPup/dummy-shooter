@@ -71,8 +71,14 @@ bool Bullet::draw()
 	float bulletAbsoluteCoordYPos = bodyPosY2*cos(fabs(radAngle));
 	float absBulletAbsoluteCoordXPos = fabs(bodyPosY2*sin(radAngle));
 
-	if(bulletAbsoluteCoordYPos >= (topWorld - bottomWorld)
-	|| absBulletAbsoluteCoordXPos > fabs(westWorld - oldShiftX) || absBulletAbsoluteCoordXPos > fabs(eastWorld - oldShiftX)) //two condition in case east != -west
+	bool outWorld = false;
+
+	if((bulletAbsoluteCoordYPos >= (topWorld - bottomWorld)) //bullet over top
+	|| oldGunRotation < 0 && absBulletAbsoluteCoordXPos > fabs(westWorld - oldShiftX) //bullet over west
+	|| oldGunRotation > 0 && absBulletAbsoluteCoordXPos > fabs(eastWorld - oldShiftX)) //bullet over east
+		outWorld = true;
+	
+	if(outWorld)
 	{
 		shot = false;
 		bulletPos = 0.0f;

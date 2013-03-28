@@ -20,15 +20,26 @@ using namespace std;
 int screenX = 1024;
 int screenY = 768;
 
+//World boundaries
+const float topWorld = 4.0f;
+const float bottomWorld = -topWorld;
+const float westWorld = 5.0f;
+const float eastWorld = -westWorld;
+
+//Player
+Player2D* player1;
+float bodyDimX = 1.0f;
+float bodyDimY = 0.2f;
+
+//Gun
+float gunDimX = 0.2f;
+float gunDimY = 0.3f;
+
 //Position of player (except shiftY)
 float shiftX = 0.0f;
-float shiftY = 0.0f;
+float shiftY = bottomWorld + bodyDimY/2.0f; //when the bullet is fired, the y axis needs to be set between the gun and the player (for rotation purpose - look at bullet's draw code)
 float shiftZ = 0.0f;
 float gunRotation = 0.0;
-
-//Update time
-int FPS = 30;
-float updateTime = 1000/(float)FPS;
 
 //Bullet
 BulletSystem* bulletSystem;
@@ -36,11 +47,9 @@ float bulletDimY = 0.1f;
 float bulletSpeed = 0.1f;
 int numBullets = 5;
 
-//World boundaries
-const float topWorld = 4.0f;
-const float bottomWorld = -topWorld;
-const float westWorld = 5.0f;
-const float eastWorld = -westWorld;
+//Update time
+int FPS = 30;
+float updateTime = 1000/(float)FPS;
 
 float worldBoundaries[4] = {topWorld, bottomWorld, westWorld, eastWorld};
 
@@ -54,11 +63,11 @@ void handleSpecialKeyPress(int key, int x, int y)
 	{	
 		case GLUT_KEY_LEFT: //a
 			if(gunRotation >= -rotationsLimit)
-				gunRotation -= 6.0f;
+				gunRotation -= 10.0f;
 			break;
 		case GLUT_KEY_RIGHT: //d
 			if(gunRotation <= rotationsLimit)
-				gunRotation += 6.0f;
+				gunRotation += 10.0f;
 			break;
 	}
 	//we must not call here glutPostRedisplay because it will increase FPS above the set threshold
@@ -72,13 +81,15 @@ void handleKeypress(unsigned char key, //The key that was pressed
 	{	
 		case 27: //Escape key
 			exit(0); //Exit the program
-			break;
+			break;		
 		case 97: //a
-			shiftX += 0.4f;
-			break;
+			if(shiftX + bodyDimX <= westWorld)
+				shiftX += westWorld/10; //it should be a divisor of westWorld
+			break;		
 		case 100: //d
-			shiftX -= 0.4f;
-			break;
+			if(shiftX - bodyDimX >= eastWorld) //we presume shiftX negative
+				shiftX -= westWorld/10; //here we presume that eastWorld = -topWorld
+			break;		
 		case 32: //space
 			bulletSystem->fire(shiftX, shiftY, shiftZ, gunRotation, bulletSpeed);
 			break;
@@ -103,6 +114,7 @@ void initRendering()
 
 void initObject()
 {
+	player1 = new Player2D(bodyDimX, bodyDimY, gunDimX, gunDimY);
 	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
 }
 
@@ -184,19 +196,11 @@ void drawScene()
 
 	/******Player******/
 	glColor3f(0.0f, 1.0f, 0.5f);
-	float bodyDimX = 1.0f;
-	float bodyDimY = 0.2f;
 
-	shiftY = bottomWorld + bodyDimY/2.0f; //when the bullet is fired, the y axis needs to be set between the gun and the player (for rotation purpose - look at bullet's draw code)
-
-	float gunDimX = 0.2f;
-	float gunDimY = 0.3f;
-
-	Player2D player1(bodyDimX, bodyDimY, gunDimX, gunDimY);
-
-	glPushMatrix();
+	glPushMatrix();		
 		glTranslatef(shiftX, bottomWorld, shiftZ);
-		player1.draw(gunRotation);
+		//drawAxis(10.0f, 10.0f, 10.0f); //debug
+		player1->draw(gunRotation);
 	glPopMatrix();
 	/******Player******/
 
