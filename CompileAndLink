@@ -1,7 +1,0 @@
-cd src
-g++ -c DummyShooter.cpp
-g++ -c Bullet.cpp
-g++ -c BulletSystem.cpp
-g++ -c Player2D.cpp
-
-g++ DummyShooter.o Bullet.o BulletSystem.o Player2D.o -o ../DummyShooter -lglut -lGL -lGLU
