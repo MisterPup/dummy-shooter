@@ -68,15 +68,21 @@ bool Bullet::draw()
 	float bodyPosZ = 0.0f;
 
 	float radAngle = 2*M_PI*oldGunRotation/360;
-	float bulletAbsoluteCoordYPos = bodyPosY2*cos(fabs(radAngle));
-	float absBulletAbsoluteCoordXPos = fabs(bodyPosY2*sin(radAngle));
+	float bulletAbsoluteCoordYPos = bodyPosY2*cos(fabs(radAngle)) + oldShiftY;
+	float bulletAbsoluteCoordXPos = bodyPosY2*sin(-radAngle) + oldShiftX; //minus for simplicity
 
 	bool outWorld = false;
 
-	if((bulletAbsoluteCoordYPos >= (topWorld - bottomWorld)) //bullet over top
-	|| oldGunRotation < 0 && absBulletAbsoluteCoordXPos > fabs(westWorld - oldShiftX) //bullet over west
-	|| oldGunRotation > 0 && absBulletAbsoluteCoordXPos > fabs(eastWorld - oldShiftX)) //bullet over east
+	if(bulletAbsoluteCoordYPos >= topWorld
+	|| bulletAbsoluteCoordYPos <= bottomWorld
+	|| bulletAbsoluteCoordXPos >= westWorld
+	|| bulletAbsoluteCoordXPos <= eastWorld)
 		outWorld = true;
+
+	/*if((bulletAbsoluteCoordYPos >= fabs(topWorld - bottomWorld)) //bullet over top
+	|| (oldGunRotation < 0 && absBulletAbsoluteCoordXPos > fabs(westWorld - oldShiftX)) //bullet over west
+	|| (oldGunRotation > 0 && absBulletAbsoluteCoordXPos > fabs(eastWorld - oldShiftX))) //bullet over east
+		outWorld = true;*/
 	
 	if(outWorld)
 	{
@@ -88,6 +94,22 @@ bool Bullet::draw()
 	glPushMatrix();
 		glTranslatef(oldShiftX, oldShiftY, oldShiftZ);
 		glRotatef(oldGunRotation, 0.0f, 0.0f, 1.0f);
+
+		glBegin(GL_LINES);
+
+		/*glColor3f(0.0, 1.0, 0.0); //green
+		glVertex3f(-10.0f, 0.0f, 0.0f);
+		glVertex3f(10.0f, 0.0f, 0.0f);
+
+		glColor3f(0.0, 0.0, 1.0); //blue
+		glVertex3f(0.0f, -10.0f, 0.0f);
+		glVertex3f(0.0f, 10.0f, 0.0f);
+
+		glColor3f(1.0, 0.0, 0.0); //red
+		glVertex3f(0.0f, 0.0f, -10.0f);
+		glVertex3f(0.0f, 0.0f, 10.0f);*/
+
+		glEnd();
 
 		glBegin(GL_LINES);
 		glColor3f(0.0, 0.5, 0.5);

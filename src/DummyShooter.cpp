@@ -59,15 +59,25 @@ void keyOperation()
 	{
 		rad = 2*M_PI*rotation/360; //rotation in radiants
 
-		newPosX += moveBy*cos(M_PI/2 + rad); //the minus is necessary because we are considering the angle with the negative x half axes ???
-		newPosY += moveBy*sin(M_PI/2 + rad); //no minus sign!
+		float toMoveX = moveBy*cos(M_PI/2 + rad);
+		float toMoveY = moveBy*sin(M_PI/2 + rad);
+
+		//if(newPosX + toMoveX < westWorld && newPosX + toMoveX > eastWorld)
+			newPosX += toMoveX;
+		//if(newPosY + toMoveY < topWorld && newPosY + toMoveY > bottomWorld)
+			newPosY += toMoveY;
 	}
 	if(keyStates['s']) //115
 	{
 		rad = 2*M_PI*rotation/360; //rotation in radiants
 
-		newPosX -= moveBy*cos(M_PI/2 + rad); //the minus is necessary because we are considering the angle with the negative x half axes
-		newPosY -= moveBy*sin(M_PI/2 + rad); //no minus sign!
+		float toMoveX = moveBy*cos(M_PI/2 + rad);
+		float toMoveY = moveBy*sin(M_PI/2 + rad);
+
+		//if(newPosX + toMoveX < westWorld && newPosX + toMoveX > eastWorld)
+			newPosX -= toMoveX;
+		//if(newPosY + toMoveY < topWorld && newPosY + toMoveY > bottomWorld)
+			newPosY -= toMoveY;
 	}
 	if(keyStates['a']) //97
 	{
@@ -79,7 +89,8 @@ void keyOperation()
 	}
 	if(keyStates[32]) //space
 	{
-
+		bulletSystem->fire(oldPosX, oldPosY, oldPosZ, rotation, bulletSpeed);
+		//keyStates[32] = false; //to avoid bullets to go one over the other (...)
 	}
 }
 
@@ -101,6 +112,7 @@ void initRendering()
 void initObject()
 {
 	player1 = new PlayerTriangle(base, height);
+	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
 }
 
 //Called when the window is resized
@@ -127,7 +139,7 @@ void drawAxis(float length_x, float length_y, float length_z)
 	glBegin(GL_LINES);
 
 	glColor3f(0.0, 1.0, 0.0); //green
-	glVertex3f(0.0f, 0.0f, 0.0f);
+	glVertex3f(-length_x, 0.0f, 0.0f);
 	glVertex3f(length_x, 0.0f, 0.0f);
 
 	glColor3f(0.0, 0.0, 1.0); //blue
@@ -155,11 +167,11 @@ void drawBoundariesOfWorld()
 	glVertex3f(eastWorld, bottomWorld, 0.0f);
 	glVertex3f(westWorld, bottomWorld, 0.0f);
 	
-	glColor3f(0.0, 0.0, 1.0); //red
+	glColor3f(0.0, 0.0, 1.0); //blue
 	glVertex3f(westWorld, bottomWorld, 0.0f);
 	glVertex3f(westWorld, topWorld, 0.0f);
 
-	glColor3f(0.0, 0.0, 1.0); //red
+	glColor3f(0.0, 0.0, 1.0); //blue
 	glVertex3f(eastWorld, bottomWorld, 0.0f);
 	glVertex3f(eastWorld, topWorld, 0.0f);
 
@@ -201,13 +213,13 @@ void drawScene()
 	/******Player******/
 
 
-	/******Bullet******/
-	/*glColor3f(0.0, 1.0, 0.0);
+	/******Bullets******/
+	glColor3f(0.0, 1.0, 0.0);
 
 	glPushMatrix();
 		bulletSystem->draw();
-	glPopMatrix();*/
-	/******Bullet******/
+	glPopMatrix();
+	/******Bullets******/
 
 	glutSwapBuffers(); //Send the 3D scene to the screen
 }

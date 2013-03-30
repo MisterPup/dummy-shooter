@@ -34,13 +34,13 @@ float newPosX = 0.0f;
 float newPosY = 0.0f;
 float newPosZ = 0.0f;
 
-float moveBy = 0.5f;
+float moveBy = 0.25f;
 float rotateBy = 10.0f;
 
 //Bullet
 BulletSystem* bulletSystem;
 float bulletDimY = 0.1f;
-float bulletSpeed = 0.1f;
+float bulletSpeed = 0.35f;
 int numBullets = 5;
 
 //Update time
