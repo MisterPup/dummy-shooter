@@ -19,21 +19,23 @@ const float westWorld = 5.0f;
 const float eastWorld = -westWorld;
 
 //Player
-Player2D* player1;
-float bodyDimX = 1.0f;
-float bodyDimY = 0.2f;
+PlayerTriangle* player1;
+float base = 0.5f;
+float height = 0.5f;
 
-//Gun
-float gunDimX = 0.2f;
-float gunDimY = 0.3f;
+float rotation = 0.0;
+float rad = 0.0f;
 
-//Position of player (except shiftY)
-float shiftX = 0.0f;
-float shiftY = bottomWorld + bodyDimY/2.0f; //when the bullet is fired, the y axis needs to be set between the gun and the player (for rotation purpose - look at bullet's draw code)
-float shiftZ = 0.0f;
-float gunRotation = 0.0;
+float oldPosX = 0.0f;
+float oldPosY = 0.0f;
+float oldPosZ = 0.0f;
 
-float shift_temp = 0.0f;
+float newPosX = 0.0f;
+float newPosY = 0.0f;
+float newPosZ = 0.0f;
+
+float moveBy = 0.5f;
+float rotateBy = 10.0f;
 
 //Bullet
 BulletSystem* bulletSystem;
@@ -49,5 +51,9 @@ float worldBoundaries[4] = {topWorld, bottomWorld, westWorld, eastWorld};
 
 //Gun Rotation Limits
 const float rotationsLimit = 45.0f;
+
+//bool for key operation: true = pressed, false = unpressed
+bool* keyStates = new bool[256];
+bool* specialKeyStates = new bool[256];
 
 #endif /* GLOBALVARIABLES_H_ */

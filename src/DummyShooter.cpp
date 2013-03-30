@@ -11,6 +11,7 @@
 #include <GL/glut.h>
 
 #include "Player2D.h"
+#include "PlayerTriangle.h"
 #include "Bullet.h"
 #include "BulletSystem.h"
 #include "globalVariables.h"
@@ -20,48 +21,66 @@ using namespace std;
 //Called when a special key is pressed
 void handleSpecialKeyPress(int key, int x, int y) 
 {
-	switch (key) 
-	{	
-		case GLUT_KEY_LEFT: //a
-			if(gunRotation >= -rotationsLimit)
-				gunRotation -= 10.0f;
-			break;
-		case GLUT_KEY_RIGHT: //d
-			if(gunRotation <= rotationsLimit)
-				gunRotation += 10.0f;
-			break;
-	}
-	//we must not call here glutPostRedisplay because it will increase FPS above the set threshold
+	specialKeyStates[key] = true;
+}
+
+void handleSpecialUpPress(int key, int x, int y)
+{
+	specialKeyStates[key] = false;
+}
+
+void specialKeyOperation()
+{
+	if(specialKeyStates[GLUT_KEY_LEFT])
+		rotation -= rotateBy;
+	if(specialKeyStates[GLUT_KEY_RIGHT])
+		rotation += rotateBy;
 }
 
 //Called when a key is pressed
-void handleKeypress(unsigned char key, //The key that was pressed
-					int x, int y) //The current mouse coordinates
+void handleKeyPress(unsigned char key, int x, int y)
 {    
-	switch (key) 
-	{	
-		case 27: //Escape key
-			exit(0); //Exit the program
-			break;
-		case 119: //w
-			shift_temp += 0.1f;			
-			break;
-		case 115: //s
-			shift_temp -= 0.1f;
-			break;
-		case 97: //a
-			if(shiftX + bodyDimX <= westWorld)
-				shiftX += westWorld/10; //it should be a divisor of westWorld
-			break;		
-		case 100: //d
-			if(shiftX - bodyDimX >= eastWorld) //we presume shiftX negative
-				shiftX -= westWorld/10; //here we presume that eastWorld = -topWorld
-			break;		
-		case 32: //space
-			bulletSystem->fire(shiftX, shiftY, shiftZ, gunRotation, bulletSpeed);
-			break;
+	keyStates[key] = true;
+}
+
+void handleKeyUpPress(unsigned char key, int x, int y)
+{
+	keyStates[key] = false;
+}
+
+//do not use "else if" because then you can't press 'w' and 'space' together
+void keyOperation()
+{
+	if(keyStates[27]) //Escape key
+	{
+		exit(0); //Exit the program
 	}
-	//we must not call here glutPostRedisplay because it will increase FPS above the set threshold
+	if(keyStates['w']) //119
+	{
+		rad = 2*M_PI*rotation/360; //rotation in radiants
+
+		newPosX += moveBy*cos(M_PI/2 + rad); //the minus is necessary because we are considering the angle with the negative x half axes ???
+		newPosY += moveBy*sin(M_PI/2 + rad); //no minus sign!
+	}
+	if(keyStates['s']) //115
+	{
+		rad = 2*M_PI*rotation/360; //rotation in radiants
+
+		newPosX -= moveBy*cos(M_PI/2 + rad); //the minus is necessary because we are considering the angle with the negative x half axes
+		newPosY -= moveBy*sin(M_PI/2 + rad); //no minus sign!
+	}
+	if(keyStates['a']) //97
+	{
+
+	}
+	if(keyStates['d']) //100
+	{
+
+	}
+	if(keyStates[32]) //space
+	{
+
+	}
 }
 
 void handleMousePress(int button, int state, int x, int y)
@@ -81,8 +100,7 @@ void initRendering()
 
 void initObject()
 {
-	player1 = new Player2D(bodyDimX, bodyDimY, gunDimX, gunDimY);
-	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
+	player1 = new PlayerTriangle(base, height);
 }
 
 //Called when the window is resized
@@ -109,7 +127,7 @@ void drawAxis(float length_x, float length_y, float length_z)
 	glBegin(GL_LINES);
 
 	glColor3f(0.0, 1.0, 0.0); //green
-	glVertex3f(-length_x, 0.0f, 0.0f);
+	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(length_x, 0.0f, 0.0f);
 
 	glColor3f(0.0, 0.0, 1.0); //blue
@@ -161,26 +179,34 @@ void drawScene()
 				0.0, 0.0, 0.0,		// center
 				0.0, 1.0, 0.0);		// vector UP
 
-	drawBoundariesOfWorld();
+	specialKeyOperation();
+	keyOperation();
 
+	drawBoundariesOfWorld();
 
 	/******Player******/
 	glColor3f(0.0f, 1.0f, 0.5f);
+	//drawAxis(10.0f, 10.0f, 10.0f);
+	glPushMatrix();
 
-	glPushMatrix();		
-		glTranslatef(shiftX, bottomWorld, shiftZ);
-		//drawAxis(10.0f, 10.0f, 10.0f); //debug
-		player1->draw(gunRotation);
+		glTranslatef(oldPosX, oldPosY, oldPosZ);
+		glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+
+		oldPosX = newPosX;
+		oldPosY = newPosY;
+		oldPosZ = newPosZ;
+
+		player1->draw();
 	glPopMatrix();
 	/******Player******/
 
 
 	/******Bullet******/
-	glColor3f(0.0, 1.0, 0.0);
+	/*glColor3f(0.0, 1.0, 0.0);
 
 	glPushMatrix();
 		bulletSystem->draw();
-	glPopMatrix();
+	glPopMatrix();*/
 	/******Bullet******/
 
 	glutSwapBuffers(); //Send the 3D scene to the screen
@@ -206,8 +232,10 @@ int main(int argc, char** argv) {
 	initObject();
 
 	//Set handler functions for drawing, keypresses, and window resizes	
-	glutKeyboardFunc(handleKeypress);
+	glutKeyboardFunc(handleKeyPress);
+	glutKeyboardUpFunc(handleKeyUpPress);
 	glutSpecialFunc(handleSpecialKeyPress);
+	glutSpecialUpFunc(handleSpecialUpPress);
 	glutMouseFunc(handleMousePress);
 	glutReshapeFunc(handleResize);
 	glutDisplayFunc(drawScene);
