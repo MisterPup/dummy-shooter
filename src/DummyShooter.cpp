@@ -10,96 +10,14 @@
 #include <math.h>
 #include <GL/glut.h>
 
-#include "Player2D.h"
-#include "PlayerTriangle.h"
-#include "Bullet.h"
-#include "BulletSystem.h"
-#include "globalVariables.h"
+#include "class/PlayerTriangle.h"
+#include "class/BulletSystem.h"
+#include "header/globalVariables.h"
+#include "header/keyboard.h"
+#include "header/mouse.h"
+#include "header/menu.h"
 
 using namespace std;
-
-//Called when a special key is pressed
-void handleSpecialKeyPress(int key, int x, int y) 
-{
-	specialKeyStates[key] = true;
-}
-
-void handleSpecialUpPress(int key, int x, int y)
-{
-	specialKeyStates[key] = false;
-}
-
-void specialKeyOperation()
-{
-	if(specialKeyStates[GLUT_KEY_LEFT])
-		rotation -= rotateBy;
-	if(specialKeyStates[GLUT_KEY_RIGHT])
-		rotation += rotateBy;
-}
-
-//Called when a key is pressed
-void handleKeyPress(unsigned char key, int x, int y)
-{    
-	keyStates[key] = true;
-}
-
-void handleKeyUpPress(unsigned char key, int x, int y)
-{
-	keyStates[key] = false;
-}
-
-//do not use "else if" because then you can't press 'w' and 'space' together
-void keyOperation()
-{
-	if(keyStates[27]) //Escape key
-	{
-		exit(0); //Exit the program
-	}
-	if(keyStates['w']) //119
-	{
-		rad = 2*M_PI*rotation/360; //rotation in radiants
-
-		float toMoveX = moveBy*cos(M_PI/2 + rad);
-		float toMoveY = moveBy*sin(M_PI/2 + rad);
-
-		//if(newPosX + toMoveX < westWorld && newPosX + toMoveX > eastWorld)
-			newPosX += toMoveX;
-		//if(newPosY + toMoveY < topWorld && newPosY + toMoveY > bottomWorld)
-			newPosY += toMoveY;
-	}
-	if(keyStates['s']) //115
-	{
-		rad = 2*M_PI*rotation/360; //rotation in radiants
-
-		float toMoveX = moveBy*cos(M_PI/2 + rad);
-		float toMoveY = moveBy*sin(M_PI/2 + rad);
-
-		//if(newPosX + toMoveX < westWorld && newPosX + toMoveX > eastWorld)
-			newPosX -= toMoveX;
-		//if(newPosY + toMoveY < topWorld && newPosY + toMoveY > bottomWorld)
-			newPosY -= toMoveY;
-	}
-	if(keyStates['a']) //97
-	{
-
-	}
-	if(keyStates['d']) //100
-	{
-
-	}
-	if(keyStates[32]) //space
-	{
-		bulletSystem->fire(oldPosX, oldPosY, oldPosZ, rotation, bulletSpeed);
-		//keyStates[32] = false; //to avoid bullets to go one over the other (...)
-	}
-}
-
-void handleMousePress(int button, int state, int x, int y)
-{
-	if(state == GLUT_DOWN) //quando rilascio mouse
-	{
-	}
-}
 
 //Initializes 3D rendering
 void initRendering() 
@@ -118,8 +36,11 @@ void initObject()
 //Called when the window is resized
 void handleResize(int w, int h) 
 {
-	screenX = w;
-	screenY = h;
+	prevScreenX = curScreenX;
+	prevScreenY = curScreenY;
+
+	curScreenX = w;
+	curScreenY = h;
 
 	//Tell OpenGL how to convert from coordinates to pixel values
 	glViewport(0, 0, w, h);
@@ -191,13 +112,12 @@ void drawScene()
 				0.0, 0.0, 0.0,		// center
 				0.0, 1.0, 0.0);		// vector UP
 
-	specialKeyOperation();
 	keyOperation();
 
 	drawBoundariesOfWorld();
 
 	/******Player******/
-	glColor3f(0.0f, 1.0f, 0.5f);
+	//glColor3f(0.0f, 1.0f, 0.5f);
 	//drawAxis(10.0f, 10.0f, 10.0f);
 	glPushMatrix();
 
@@ -236,20 +156,24 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
-	glutInitWindowSize(screenX, screenY); //Set the window size
+	glutInitWindowSize(curScreenX, curScreenY); //Set the window size
+
+	glutCreateWindow("Dummy Shooter"); //Create the window
+	glutPositionWindow(0,0);
 	
-	//Create the window
-	glutCreateWindow("Falling Objects");
 	initRendering(); //Initialize rendering
 	initObject();
 
+	initMenu();
+
 	//Set handler functions for drawing, keypresses, and window resizes	
-	glutKeyboardFunc(handleKeyPress);
-	glutKeyboardUpFunc(handleKeyUpPress);
+	glutKeyboardFunc(handleStdKeyPress);
+	glutKeyboardUpFunc(handleStdKeyUpPress);
 	glutSpecialFunc(handleSpecialKeyPress);
 	glutSpecialUpFunc(handleSpecialUpPress);
 	glutMouseFunc(handleMousePress);
 	glutReshapeFunc(handleResize);
+
 	glutDisplayFunc(drawScene);
 	glutTimerFunc(updateTime, update, 0);
 	
