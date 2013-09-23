@@ -5,14 +5,14 @@
  *      Author: misterpup
  */
 
-#ifndef BULLET_H_
-#define BULLET_H_
-
 #include <GL/glut.h>
 #include <iostream>
 #include <math.h>
 
 using namespace std;
+
+#ifndef BULLET_H_
+#define BULLET_H_
 
 class Bullet
 {

@@ -5,10 +5,10 @@
  *      Author: misterpup
  */
 
+#include <GL/glut.h>
+
 #ifndef PLAYERTRIANGLE_H_
 #define PLAYERTRIANGLE_H_
-
-#include <GL/glut.h>
 
 class PlayerTriangle
 {

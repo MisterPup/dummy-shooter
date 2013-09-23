@@ -5,17 +5,15 @@
  *      Author: misterpup
  */
 
-#ifndef MOUSE_H_
-#define MOUSE_H_
-
 #include "globalVariables.h"
 #include <GL/glut.h>
 
+#ifndef MOUSE_H_
+#define MOUSE_H_
+
 void handleMousePress(int button, int state, int x, int y)
 {
-	if(state == GLUT_DOWN) //quando rilascio mouse
-	{
-	}
+	mainMenu->pressButton(button, state, x, y);
 }
 
 

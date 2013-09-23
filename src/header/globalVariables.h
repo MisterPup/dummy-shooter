@@ -5,6 +5,7 @@
  *      Author: misterpup
  */
 
+
 #ifndef GLOBALVARIABLES_H_
 #define GLOBALVARIABLES_H_
 
@@ -26,7 +27,6 @@ const float eastWorld = -westWorld;
 bool teleport = true;
 
 //Player
-PlayerTriangle* player1;
 float base = 0.5f;
 float height = 0.5f;
 
@@ -48,7 +48,6 @@ float moveBy = 0.15f;
 float rotateBy = 10.0f;
 
 //Bullet
-BulletSystem* bulletSystem;
 float bulletDimY = 0.1f;
 float bulletSpeed = 0.25f;
 int numBullets = 5;
@@ -67,5 +66,6 @@ const float rotationsLimit = 45.0f;
 bool* stdKeyStates = new bool[256];
 bool* specialKeyStates = new bool[256];
 bool* modifiers = new bool[3]; //SHIFT(or CAPS LOCK)=1, CTRL=2, ALT=4
+
 
 #endif /* GLOBALVARIABLES_H_ */

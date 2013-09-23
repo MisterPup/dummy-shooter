@@ -5,13 +5,13 @@
  *      Author: misterpup
  */
 
-#ifndef BULLETSYSTEM_H_
-#define BULLETSYSTEM_H_
-
 #include <vector>
 #include "Bullet.h"
 
 using namespace std;
+
+#ifndef BULLETSYSTEM_H_
+#define BULLETSYSTEM_H_
 
 class BulletSystem
 {

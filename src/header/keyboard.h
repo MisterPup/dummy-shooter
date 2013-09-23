@@ -5,11 +5,11 @@
  *      Author: misterpup
  */
 
-#ifndef KEYBOARD_H_
-#define KEYBOARD_H_
-
 #include "globalVariables.h"
 #include <GL/glut.h>
+
+#ifndef KEYBOARD_H_
+#define KEYBOARD_H_
 
 /*void modifiersOperation()
 {
@@ -36,6 +36,9 @@ void handleSpecialUpPress(int key, int x, int y)
 //Called when a standard key is pressed
 void handleStdKeyPress(unsigned char key, int x, int y)
 {
+	if(key == 27) //ESC
+		mainMenu->switchInGame();
+
 	stdKeyStates[key] = true;
 }
 
@@ -55,10 +58,11 @@ void specialKeyOperation()
 //do not use "else if" because then you can't press 'w' and 'space' together
 void stdKeyOperation()
 {
-	if(stdKeyStates[27]) //Escape key
+	/*if(stdKeyStates[27]) //Escape key gestita senza buffer
 	{
-		exit(0); //Exit the program
-	}
+		mainMenu->switchInGame();
+		//exit(0); //Exit the program
+	}*/
 	if(stdKeyStates['w']) //119
 	{
 		rad = 2*M_PI*rotation/360; //rotation in radiants

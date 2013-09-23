@@ -5,10 +5,10 @@
  *      Author: misterpup
  */
 
+#include <GL/glut.h>
+
 #ifndef PLAYER2D_H_
 #define PLAYER2D_H_
-
-#include <GL/glut.h>
 
 class Player2D
 {

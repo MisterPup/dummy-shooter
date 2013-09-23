@@ -12,10 +12,13 @@
 
 #include "class/PlayerTriangle.h"
 #include "class/BulletSystem.h"
+#include "class/MainMenu.h"
 #include "header/globalVariables.h"
+#include "header/gameVariables.h"
 #include "header/keyboard.h"
 #include "header/mouse.h"
 #include "header/menu.h"
+
 
 using namespace std;
 
@@ -24,6 +27,7 @@ void initRendering()
 {
 	//Makes 3D drawing work when something is in front of something else
 	glEnable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	srand(time(NULL));
 }
 
@@ -31,6 +35,7 @@ void initObject()
 {
 	player1 = new PlayerTriangle(base, height);
 	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
+	mainMenu = new MainMenu();
 }
 
 //Called when the window is resized
@@ -102,6 +107,9 @@ void drawBoundariesOfWorld()
 //Draws the 3D scene
 void drawScene() 
 {
+	if(mainMenu->mustExitGame())
+		exit(0);
+
 	//Clear information from last draw
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -114,32 +122,45 @@ void drawScene()
 
 	keyOperation();
 
-	drawBoundariesOfWorld();
+	mainMenu->draw();
 
-	/******Player******/
-	//glColor3f(0.0f, 1.0f, 0.5f);
-	//drawAxis(10.0f, 10.0f, 10.0f);
-	glPushMatrix();
+	if(mainMenu->isInGame())
+	{
+		drawBoundariesOfWorld();
 
-		glTranslatef(oldPosX, oldPosY, oldPosZ);
-		glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+		//------Player------
+		if(mainMenu->mustReset())
+		{
+			newPosX = oldPosX = 0.0f;
+			newPosY = oldPosY = 0.0f;
+			newPosZ = oldPosZ = 0.0f;
+			rotation = 0.0f;
 
-		oldPosX = newPosX;
-		oldPosY = newPosY;
-		oldPosZ = newPosZ;
+			mainMenu->gameHasBeenReset();
+		}
 
-		player1->draw();
-	glPopMatrix();
-	/******Player******/
+		glPushMatrix();
+
+			glTranslatef(oldPosX, oldPosY, oldPosZ);
+			glRotatef(rotation, 0.0f, 0.0f, 1.0f);
+
+			oldPosX = newPosX;
+			oldPosY = newPosY;
+			oldPosZ = newPosZ;
+
+			player1->draw();
+		glPopMatrix();
+		//------Player------
 
 
-	/******Bullets******/
-	glColor3f(0.0, 1.0, 0.0);
+		//------Bullets------
+		glColor3f(0.0, 1.0, 0.0);
 
-	glPushMatrix();
-		bulletSystem->draw();
-	glPopMatrix();
-	/******Bullets******/
+		glPushMatrix();
+			bulletSystem->draw();
+		glPopMatrix();
+		//------Bullets------
+	}
 
 	glutSwapBuffers(); //Send the 3D scene to the screen
 }
