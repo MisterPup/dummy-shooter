@@ -35,7 +35,7 @@ void initObject()
 {
 	player1 = new PlayerTriangle(base, height);
 	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
-	mainMenu = new MainMenu();
+	mainMenu = new MainMenu(buttonSize, colorButton, colorText, font);
 }
 
 //Called when the window is resized
@@ -58,25 +58,6 @@ void handleResize(int w, int h)
 		       (double)w / (double)h,  //The width-to-height ratio
 			1.0,                   //The near z clipping coordinate
 			200.0);                //The far z clipping coordinate
-}
-
-void drawAxis(float length_x, float length_y, float length_z)
-{
-	glBegin(GL_LINES);
-
-	glColor3f(0.0, 1.0, 0.0); //green
-	glVertex3f(-length_x, 0.0f, 0.0f);
-	glVertex3f(length_x, 0.0f, 0.0f);
-
-	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(0.0f, -length_y, 0.0f);
-	glVertex3f(0.0f, length_y, 0.0f);
-
-	glColor3f(1.0, 0.0, 0.0); //red
-	glVertex3f(0.0f, 0.0f, -length_z);
-	glVertex3f(0.0f, 0.0f, length_z);
-
-	glEnd();
 }
 
 void drawBoundariesOfWorld()
@@ -122,7 +103,27 @@ void drawScene()
 
 	keyOperation();
 
+	/*glEnable( GL_BLEND );
+	Button n("Single Player", GLUT_BITMAP_TIMES_ROMAN_24, buttonSize, colorButton, colorText);
+	n.draw();
+
+	glBegin(GL_LINES);
+	glColor3f(0.0, 0.0, 1.0); //blue
+	glVertex3f(-10.0f, 0.0f, 0.0f);
+	glVertex3f(10.0f, 0.0f, 0.0f);
+
+	glVertex3f(-10.0f, 0.500508f, 0.0f);
+	glVertex3f(10.0f, 0.500508f, 0.0f);
+
+	glVertex3f(-10.0f, -0.500508f, 0.0f);
+	glVertex3f(10.0f, -0.500508f, 0.0f);
+
+	glEnd();*
+
+	glDisable( GL_BLEND );*/
+
 	mainMenu->draw();
+
 
 	if(mainMenu->isInGame())
 	{

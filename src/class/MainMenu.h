@@ -13,16 +13,27 @@
 class MainMenu
 {
 	private:
+
+		float* buttonSize;
+		int numButton;
+
+		float* colorButton;
+		float* colorText;
+		int numColor;
+
 		bool singlePlayer;
 		bool multiPlayer;
 		bool exitGame;
 		bool inGame;
 		bool resetGame;
-	public:
-		char** allText;
-		int numText;
 
-		MainMenu();
+	public:
+
+		const char** allText;
+		int numText;
+		void* font;
+
+		MainMenu(float buttonSize[2], float colorButton[4], float colorText[4], void* font);
 		virtual ~MainMenu();
 		void draw();
 		void drawBitmapText(char *string,float x,float y,float z);

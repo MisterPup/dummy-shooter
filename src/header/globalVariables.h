@@ -67,5 +67,11 @@ bool* stdKeyStates = new bool[256];
 bool* specialKeyStates = new bool[256];
 bool* modifiers = new bool[3]; //SHIFT(or CAPS LOCK)=1, CTRL=2, ALT=4
 
+//Main Menu
+float buttonSize[2] = {6.0f, 1.5f};
+float colorButton[4] = {0.0f, 1.0f, 0.5f, 0.5f};
+float colorText[4] = {0.0f, 1.0f, 0.5f, 1.0f};
+void* font = GLUT_BITMAP_TIMES_ROMAN_24;
+
 
 #endif /* GLOBALVARIABLES_H_ */

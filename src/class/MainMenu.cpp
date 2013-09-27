@@ -5,14 +5,40 @@
  *      Author: misterpup
  */
 
+#include <iostream>
 #include <string.h>
 #include <GL/glut.h>
 #include "MainMenu.h"
+#include "Button.h"
 
-MainMenu::MainMenu()
+using namespace std;
+
+extern int screenToWorldCoordinates(GLfloat* screenCoordinates, int numScreenCoordinates, GLdouble worldCoordinates[3]);
+
+MainMenu::MainMenu(float buttonSize[2], float colorButton[4], float colorText[4], void* font)
 {
+	numButton = 2;
+	this->buttonSize = (float*)malloc(numButton*sizeof(float));
+
+	for(int i = 0; i < numButton; i++)
+		this->buttonSize[i] = buttonSize[i];
+
+
+	numColor = 4;
+	this->colorButton = (float*)malloc(numColor*sizeof(float));
+	this->colorText = (float*)malloc(numColor*sizeof(float));
+
+	for(int i = 0; i < numColor; i++)
+	{
+		this->colorButton[i] = colorButton[i];
+		this->colorText[i] = colorText[i];
+	}
+
+	//sarebbe meglio copiare font, ma è da scoprire cosa sia l'oggetto iniziale per allocare bene la memoria
+	this->font = font;
+
 	numText = 5;
-	allText = (char**)malloc(numText*sizeof(char*));
+	allText = (const char**)malloc(numText*sizeof(const char*));
 
 	allText[0] = "SinglePlayer";
 	allText[1] = "MultiPlayer";
@@ -29,10 +55,64 @@ MainMenu::MainMenu()
 
 MainMenu::~MainMenu()
 {
+	free(buttonSize);
+	free(colorButton);
+	free(colorText);
+
 	for(int i = 0; i< numText; i++)
-		free(allText[i]);
+		free((char*)allText[i]);
 
 	free(allText);
+}
+
+void MainMenu::drawStartingMenu()
+{
+	glPushMatrix();
+	glTranslatef(0.0f, 2.0f, 0.0f);
+	Button singlePlayer((char*)allText[0], font, buttonSize, colorButton, colorText);
+	singlePlayer.draw();
+	glPopMatrix();
+
+	Button multiPlayer((char*)allText[1], font, buttonSize, colorButton, colorText);
+	multiPlayer.draw();
+
+	glPushMatrix();
+	glTranslatef(0.0f, -2.0f, 0.0f);
+	Button exit((char*)allText[2], font, buttonSize, colorButton, colorText);
+	exit.draw();
+	glPopMatrix();
+}
+
+void MainMenu::drawSinglePlayerMenu()
+{
+	glPushMatrix();
+	glTranslatef(0.0f, 2.0f, 0.0f);
+	Button singlePlayer((char*)allText[3], font, buttonSize, colorButton, colorText);
+	singlePlayer.draw();
+	glPopMatrix();
+
+	Button multiPlayer((char*)allText[4], font, buttonSize, colorButton, colorText);
+	multiPlayer.draw();
+}
+
+void MainMenu::drawMultiPlayerMenu()
+{
+	glPushMatrix();
+	glTranslatef(0.0f, 2.0f, 0.0f);
+	Button singlePlayer((char*)allText[3], font, buttonSize, colorButton, colorText);
+	singlePlayer.draw();
+	glPopMatrix();
+
+	Button multiPlayer((char*)allText[4], font, buttonSize, colorButton, colorText);
+	multiPlayer.draw();
+}
+/*
+void MainMenu::drawBitmapText(char *string,float x,float y,float z)
+{
+	char *c;
+	glRasterPos3f(x, y,z);
+	for (c = string; *c != '\0'; c++)
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
 }
 
 void MainMenu::drawButton(float translateButton[3], float textPositionInButton[3], float buttonDimension[2], float colorButton[3], float colorText[3], char* text)
@@ -102,7 +182,7 @@ void MainMenu::drawMultiPlayerMenu()
 	float translateMP[3] = {0.0f, 0.0f, 0.0f};
 	float positionMPInButton[3] = {1.25f, 0.0f, 0.0f};
 	drawButton(translateMP, positionMPInButton, buttonDimension, colorButton, colorText, allText[4]);
-}
+}*/
 
 void MainMenu::draw()
 {
@@ -116,15 +196,6 @@ void MainMenu::draw()
 		drawMultiPlayerMenu();
 
 	glDisable( GL_BLEND );
-}
-
-void MainMenu::drawBitmapText(char *string,float x,float y,float z)
-{
-	char *c;
-	glRasterPos3f(x, y,z);
-	for (c = string; *c != '\0'; c++)
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
-
 }
 
 void MainMenu::pressButtonInMainMenu(float worldX, float worldY)
@@ -195,31 +266,32 @@ void MainMenu::pressButtonInMultiPlayerMainMenu(float worldX, float worldY)
 
 void MainMenu::pressButton(int button, int state, int x, int y) //da modificare a seconda dello stato
 {
-	if(button == GLUT_LEFT_BUTTON && state == GLUT_UP)
+	GLfloat screenCoordinates[2];
+	int numScreenCoordinates = 2;
+
+	screenCoordinates[0] = x;
+	screenCoordinates[1] = y;
+
+	GLdouble worldCoordinates[3];
+
+	screenToWorldCoordinates(screenCoordinates, numScreenCoordinates, worldCoordinates);
+
+	if(button == GLUT_LEFT_BUTTON)
 	{
-		GLint viewport[4]; //var to hold the viewport info
-	    GLdouble modelview[16]; //var to hold the modelview info
-	    GLdouble projection[16]; //var to hold the projection matrix info
-	    GLfloat winX, winY, winZ; //variables to hold screen x,y,z coordinates
-	    GLdouble worldX, worldY, worldZ; //variables to hold world x,y,z coordinates
-
-		glGetDoublev( GL_MODELVIEW_MATRIX, modelview ); //get the modelview info
-		glGetDoublev( GL_PROJECTION_MATRIX, projection ); //get the projection matrix info
-		glGetIntegerv( GL_VIEWPORT, viewport ); //get the viewport info
-
-		winX = (float)x;
-		winY = (float)viewport[3] - (float)y; //OpenGL uses lower left corner of screen as coordinate system orign. Window system usually uses upper left corner as coordinate system orign.
-		glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ );
-
-		//get the world coordinates from the screen coordinates
-		gluUnProject( winX, winY, winZ, modelview, projection, viewport, &worldX, &worldY, &worldZ);
-
-		if(!inGame && !singlePlayer && !multiPlayer) //menù iniziale
-			pressButtonInMainMenu(worldX, worldY);
-		else if(singlePlayer && !inGame) //menù singlePlayer
-			pressButtonInSinglePlayerMainMenu(worldX, worldY);
-		else if(multiPlayer && !inGame) //menù multiPlayer
-			pressButtonInMultiPlayerMainMenu(worldX, worldY);
+		if(state == GLUT_UP)
+		{
+			if(!inGame && !singlePlayer && !multiPlayer) //menù iniziale
+				pressButtonInMainMenu(worldCoordinates[0], worldCoordinates[1]);
+			else if(singlePlayer && !inGame) //menù singlePlayer
+				pressButtonInSinglePlayerMainMenu(worldCoordinates[0], worldCoordinates[1]);
+			else if(multiPlayer && !inGame) //menù multiPlayer
+				pressButtonInMultiPlayerMainMenu(worldCoordinates[0], worldCoordinates[1]);
+		}
+		//else if(state == GLUT_DOWN) cambia colore del pulsante -> il colore deve essere un campo del menù
+			//changeColor funzione
+			//if(pulsante singleplayer)
+				//pulsante singleplayer.cambia colore -> devo mantenere riferimenti a tutti i pulsanti...
+		//il colore è da reimpostare in pressButtonIn
 	}
 }
 
