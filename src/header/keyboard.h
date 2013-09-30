@@ -50,9 +50,9 @@ void handleStdKeyUpPress(unsigned char key, int x, int y)
 void specialKeyOperation()
 {
 	if(specialKeyStates[GLUT_KEY_LEFT])
-		rotation -= rotateBy;
+		degRotation -= rotateBy;
 	if(specialKeyStates[GLUT_KEY_RIGHT])
-		rotation += rotateBy;
+		degRotation += rotateBy;
 }
 
 //do not use "else if" because then you can't press 'w' and 'space' together
@@ -65,11 +65,11 @@ void stdKeyOperation()
 	}*/
 	if(stdKeyStates['w']) //119
 	{
-		rad = 2*M_PI*rotation/360; //rotation in radiants
+		radRotation = 2*M_PI*degRotation/360; //rotation in radiants
 
 		//rad is negative when you press LEFT, but the coordinate system is left handed, so it works well
-		float toMoveX = moveBy*cos(M_PI/2 + rad);
-		float toMoveY = moveBy*sin(M_PI/2 + rad);
+		float toMoveX = moveBy*cos(M_PI/2 + radRotation);
+		float toMoveY = moveBy*sin(M_PI/2 + radRotation);
 
 		if(teleport)
 		{
@@ -97,10 +97,10 @@ void stdKeyOperation()
 	}
 	if(stdKeyStates['s']) //115
 	{
-		rad = 2*M_PI*rotation/360; //rotation in radiants
+		radRotation = 2*M_PI*degRotation/360; //rotation in radiants
 
-		float toMoveX = moveBy*cos(M_PI/2 + rad);
-		float toMoveY = moveBy*sin(M_PI/2 + rad);
+		float toMoveX = moveBy*cos(M_PI/2 + radRotation);
+		float toMoveY = moveBy*sin(M_PI/2 + radRotation);
 
 		if(teleport)
 		{
@@ -136,7 +136,7 @@ void stdKeyOperation()
 	}
 	if(stdKeyStates[32]) //space
 	{
-		bulletSystem->fire(oldPosX, oldPosY, oldPosZ, rotation, bulletSpeed);
+		bulletSystem->fire(oldPosX, oldPosY, oldPosZ, degRotation, bulletSpeed);
 		//keyStates[32] = false; //to avoid bullets to go one over the other (...)
 	}
 }

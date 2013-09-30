@@ -37,7 +37,7 @@ MainMenu::MainMenu(float buttonSize[2], float colorButton[4], float colorText[4]
 	//sarebbe meglio copiare font, ma è da scoprire cosa sia l'oggetto iniziale per allocare bene la memoria
 	this->font = font;
 
-	numText = 5;
+	numText = 6;
 	allText = (const char**)malloc(numText*sizeof(const char*));
 
 	allText[0] = "SinglePlayer";
@@ -45,12 +45,15 @@ MainMenu::MainMenu(float buttonSize[2], float colorButton[4], float colorText[4]
 	allText[2] = "Exit Game";
 	allText[3] = "Resume Game";
 	allText[4] = "Quit to Main Menu";
+	allText[5] = "Connect To Server";
 
 	singlePlayer = false;
 	multiPlayer = false;
 	exitGame = false;
 	inGame = false;
 	resetGame = false;
+	connected = false;
+	mustConnect = false;
 }
 
 MainMenu::~MainMenu()
@@ -68,27 +71,27 @@ MainMenu::~MainMenu()
 void MainMenu::drawStartingMenu()
 {
 	glPushMatrix();
-	glTranslatef(0.0f, 2.0f, 0.0f);
-	Button singlePlayer((char*)allText[0], font, buttonSize, colorButton, colorText);
-	singlePlayer.draw();
+		glTranslatef(0.0f, 2.0f, 0.0f);
+		Button singlePlayer((char*)allText[0], font, buttonSize, colorButton, colorText);
+		singlePlayer.draw();
 	glPopMatrix();
 
 	Button multiPlayer((char*)allText[1], font, buttonSize, colorButton, colorText);
 	multiPlayer.draw();
 
 	glPushMatrix();
-	glTranslatef(0.0f, -2.0f, 0.0f);
-	Button exit((char*)allText[2], font, buttonSize, colorButton, colorText);
-	exit.draw();
+		glTranslatef(0.0f, -2.0f, 0.0f);
+		Button exit((char*)allText[2], font, buttonSize, colorButton, colorText);
+		exit.draw();
 	glPopMatrix();
 }
 
 void MainMenu::drawSinglePlayerMenu()
 {
 	glPushMatrix();
-	glTranslatef(0.0f, 2.0f, 0.0f);
-	Button singlePlayer((char*)allText[3], font, buttonSize, colorButton, colorText);
-	singlePlayer.draw();
+		glTranslatef(0.0f, 2.0f, 0.0f);
+		Button singlePlayer((char*)allText[3], font, buttonSize, colorButton, colorText);
+		singlePlayer.draw();
 	glPopMatrix();
 
 	Button multiPlayer((char*)allText[4], font, buttonSize, colorButton, colorText);
@@ -97,92 +100,27 @@ void MainMenu::drawSinglePlayerMenu()
 
 void MainMenu::drawMultiPlayerMenu()
 {
-	glPushMatrix();
-	glTranslatef(0.0f, 2.0f, 0.0f);
-	Button singlePlayer((char*)allText[3], font, buttonSize, colorButton, colorText);
-	singlePlayer.draw();
-	glPopMatrix();
+	if(!connected)
+	{
+		glPushMatrix();
+			glTranslatef(0.0f, 2.0f, 0.0f);
+			Button connectToServer((char*)allText[5], font, buttonSize, colorButton, colorText);
+			connectToServer.draw();
+		glPopMatrix();
+	}
+	else
+	{
+		glPushMatrix();
+			glTranslatef(0.0f, 2.0f, 0.0f);
+			Button singlePlayer((char*)allText[3], font, buttonSize, colorButton, colorText);
+			singlePlayer.draw();
+		glPopMatrix();
+	}
 
 	Button multiPlayer((char*)allText[4], font, buttonSize, colorButton, colorText);
 	multiPlayer.draw();
+
 }
-/*
-void MainMenu::drawBitmapText(char *string,float x,float y,float z)
-{
-	char *c;
-	glRasterPos3f(x, y,z);
-	for (c = string; *c != '\0'; c++)
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);
-}
-
-void MainMenu::drawButton(float translateButton[3], float textPositionInButton[3], float buttonDimension[2], float colorButton[3], float colorText[3], char* text)
-{
-	float halfDimX = buttonDimension[0]/2.0f;
-	float halfDimY = buttonDimension[1]/2.0f;
-
-	glPushMatrix();
-	glTranslatef(translateButton[0], translateButton[1], translateButton[2]);
-
-	glColor4f(colorButton[0], colorButton[1], colorButton[2], colorButton[3]);
-	glRectf(-halfDimX, halfDimY, halfDimX, -halfDimY);
-
-	glColor4f(colorText[0], colorText[1], colorText[2], colorText[3]);
-	drawBitmapText(text, textPositionInButton[0], textPositionInButton[1], textPositionInButton[2]);
-	glPopMatrix();
-}
-
-void MainMenu::drawStartingMenu()
-{
-	float buttonDimension[2] = {6.0f, 1.5f};
-	float colorButton[4] = {0.0f, 1.0f, 0.5f, 0.5f};
-	float colorText[4] = {0.0f, 1.0f, 0.5f, 1.0f};
-
-	float translateSP[3] = {0.0f, 2.0f, 0.0f};
-	float positionSPInButton[3] = {1.25f, 0.0f, 0.0f};
-
-	drawButton(translateSP, positionSPInButton, buttonDimension, colorButton, colorText, allText[0]);
-
-	float translateMP[3] = {0.0f, 0.0f, 0.0f};
-	float positionMPInButton[3] = {1.25f, 0.0f, 0.0f};
-	drawButton(translateMP, positionMPInButton, buttonDimension, colorButton, colorText, allText[1]);
-
-	float translateEX[3] = {0.0f, -2.0f, 0.0f};
-	float positionEXInButton[3] = {0.45f, 0.0f, 0.0f};
-	drawButton(translateEX, positionEXInButton, buttonDimension, colorButton, colorText, allText[2]);
-}
-
-void MainMenu::drawSinglePlayerMenu()
-{
-	float buttonDimension[2] = {6.0f, 1.5f};
-	float colorButton[4] = {0.0f, 1.0f, 0.5f, 0.5f};
-	float colorText[4] = {0.0f, 1.0f, 0.5f, 1.0f};
-
-	float translateSP[3] = {0.0f, 2.0f, 0.0f};
-	float positionSPInButton[3] = {1.25f, 0.0f, 0.0f};
-
-	drawButton(translateSP, positionSPInButton, buttonDimension, colorButton, colorText, allText[3]);
-
-	float translateMP[3] = {0.0f, 0.0f, 0.0f};
-	float positionMPInButton[3] = {1.25f, 0.0f, 0.0f};
-	drawButton(translateMP, positionMPInButton, buttonDimension, colorButton, colorText, allText[4]);
-}
-
-//da implementare
-void MainMenu::drawMultiPlayerMenu()
-{
-	float buttonDimension[2] = {6.0f, 1.5f};
-	float colorButton[4] = {0.0f, 1.0f, 0.5f, 0.5f};
-	float colorText[4] = {0.0f, 1.0f, 0.5f, 1.0f};
-
-	float translateSP[3] = {0.0f, 2.0f, 0.0f};
-	float positionSPInButton[3] = {1.25f, 0.0f, 0.0f};
-
-	drawButton(translateSP, positionSPInButton, buttonDimension, colorButton, colorText, allText[3]);
-
-	float translateMP[3] = {0.0f, 0.0f, 0.0f};
-	float positionMPInButton[3] = {1.25f, 0.0f, 0.0f};
-	drawButton(translateMP, positionMPInButton, buttonDimension, colorButton, colorText, allText[4]);
-}*/
 
 void MainMenu::draw()
 {
@@ -212,7 +150,7 @@ void MainMenu::pressButtonInMainMenu(float worldX, float worldY)
 		{
 			singlePlayer = false;
 			multiPlayer = true;
-			inGame = true;
+			inGame = false;
 		}
 		else if(worldY < -1.25f && worldY > -2.75f) //Exit Game
 		{
@@ -248,18 +186,41 @@ void MainMenu::pressButtonInMultiPlayerMainMenu(float worldX, float worldY)
 {
 	if(worldX < 3 && worldX > -3) //vale per tutti e tre i pulsanti
 	{
-		if(worldY < 2.75f && worldY > 1.25f) //Resume
+		if(!connected)
 		{
-			singlePlayer = false;
-			multiPlayer = true;
-			inGame = true;
+			if(worldY < 2.75f && worldY > 1.25f) //Connect to server
+			{
+				cout << "CLICK" << endl;
+				singlePlayer = false;
+				//multiPlayer = false;
+				//inGame = false;
+				mustConnect = true;
+			}
+			else if(worldY < 0.75f && worldY > -0.75f) //Exit to Main Menu
+			{
+				singlePlayer = false;
+				multiPlayer = false;
+				inGame = false;
+				resetGame = true;
+				connected = false;
+			}
 		}
-		else if(worldY < 0.75f && worldY > -0.75f) //Exit to Main Menu
+		else
 		{
-			singlePlayer = false;
-			multiPlayer = false;
-			inGame = false;
-			resetGame = true;
+			if(worldY < 2.75f && worldY > 1.25f) //Resume
+			{
+				singlePlayer = false;
+				multiPlayer = true;
+				inGame = true;
+			}
+			else if(worldY < 0.75f && worldY > -0.75f) //Exit to Main Menu
+			{
+				singlePlayer = false;
+				multiPlayer = false;
+				inGame = false;
+				resetGame = true;
+				//connected = false; //lo disattivo da un'altra parte
+			}
 		}
 	}
 }
@@ -326,7 +287,45 @@ bool MainMenu::mustReset()
 	return resetGame;
 }
 
+bool MainMenu::isConnected()
+{
+	return connected;
+}
+
+bool MainMenu::mustConnectToServer()
+{
+	return mustConnect;
+}
+
 void MainMenu::gameHasBeenReset()
 {
 	resetGame = false;
+}
+
+void MainMenu::setConnected()
+{
+	connected = true;
+	mustConnect = false;
+
+	multiPlayer = true;
+	inGame = true;
+}
+
+void MainMenu::cannotConnect()
+{
+	mustConnect = false;
+}
+
+//se sono connesso ma devo resettare il gioco, allora devo disconnettermi
+bool MainMenu::checkMustDisconnect()
+{
+	if(resetGame && connected)
+	{
+		cout << "checkMustDisconnect" << endl;
+
+		connected = false;
+		return true;
+	}
+	else
+		return false;
 }

@@ -26,6 +26,8 @@ class MainMenu
 		bool exitGame;
 		bool inGame;
 		bool resetGame;
+		bool connected;
+		bool mustConnect;
 
 	public:
 
@@ -51,7 +53,12 @@ class MainMenu
 		bool mustExitGame();
 		bool isInGame();
 		bool mustReset();
+		bool isConnected();
+		bool mustConnectToServer();
 		void gameHasBeenReset();
+		void setConnected();
+		void cannotConnect();
+		bool checkMustDisconnect();
 };
 
 #endif /* MAINMENU_H_ */

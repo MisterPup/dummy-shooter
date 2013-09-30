@@ -40,7 +40,7 @@ int screenToWorldCoordinates(GLfloat* screenCoordinates, int numScreenCoordinate
 		return -1;
 
 	GLint viewport[4]; //var to hold the viewport info
-    GLdouble modelview[16]; //var to hold the modelview info
+    GLdouble modelview[16]; //var to hold the modelview info - 12, 13, 14 current x, y, z
     GLdouble projection[16]; //var to hold the projection matrix info
     GLfloat winX, winY, winZ; //variables to hold screen x,y,z coordinates
 

@@ -16,4 +16,7 @@ PlayerTriangle* player1;
 BulletSystem* bulletSystem;
 MainMenu* mainMenu;
 
+Client* client;
+PlayerTriangle* player2;
+
 #endif /* GAMEVARIABLES_H_ */
