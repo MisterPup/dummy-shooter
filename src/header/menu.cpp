@@ -1,20 +1,11 @@
 /*
- * menu.h
+ * mouse.cpp
  *
- *  Created on: 13/apr/2013
+ *  Created on: 13/ott/2013
  *      Author: misterpup
  */
 
-#ifndef MENU_H_
-#define MENU_H_
-
-//Reset WindowSize
-void ResetWindowSize();
-void toggleFullScreen();
-void menu(int option);
-void initMenu();
-
-/*
+#include "menu.h"
 #include "globalVariables.h"
 #include <GL/glut.h>
 
@@ -72,6 +63,5 @@ void initMenu()
 	glutAddMenuEntry("Quit", 'q');
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
-*/
 
-#endif /* MENU_H_ */
+

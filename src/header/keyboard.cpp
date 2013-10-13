@@ -1,21 +1,14 @@
 /*
- * keyboard.h
+ * keyboard.cpp
  *
- *  Created on: 13/apr/2013
+ *  Created on: 13/ott/2013
  *      Author: misterpup
  */
 
-#ifndef KEYBOARD_H_
-#define KEYBOARD_H_
-
-//Called when a special key is pressed
-void handleSpecialKeyPress(int key, int x, int y);
-void handleSpecialUpPress(int key, int x, int y);
-//Called when a standard key is pressed
-void handleStdKeyPress(unsigned char key, int x, int y);
-void handleStdKeyUpPress(unsigned char key, int x, int y);
-void stdKeyOperation();
-void keyOperation();
+#include "keyboard.h"
+#include "globalVariables.h"
+#include <GL/glut.h>
+#include <math.h>
 
 /*void modifiersOperation()
 {
@@ -26,7 +19,12 @@ void keyOperation();
 	//GLUT_ACTIVE_CTRL  - 2 Set if the Ctrl modifier is active.
 	//GLUT_ACTIVE_ALT   - 4 Set if the Alt modifier is active.
 }*/
-/*
+
+//bool for key operation: true = pressed, false = unpressed
+bool* stdKeyStates = new bool[256];
+bool* specialKeyStates = new bool[256];
+bool* modifiers = new bool[3]; //SHIFT(or CAPS LOCK)=1, CTRL=2, ALT=4
+
 //Called when a special key is pressed
 void handleSpecialKeyPress(int key, int x, int y)
 {
@@ -152,8 +150,8 @@ void stdKeyOperation()
 	}
 	if(stdKeyStates[32]) //space
 	{
-		bulletSystem->fire(newPosX, newPosY, newPosZ, degRotation, bulletSpeed); //ADVANCED
-		//bulletSystem->fire(oldPosX, oldPosY, oldPosZ, degRotation, bulletSpeed); //oldPosXYZ non servono!
+		bulletSystem->fire(newPosX, newPosY, newPosZ, degRotation, bulletSpeed);
+		//bulletSystem->fire(oldPosX, oldPosY, oldPosZ, degRotation, bulletSpeed); //oldPosXYZ non serve più!
 		//keyStates[32] = false; //to avoid bullets to go one over the other (...)
 	}
 }
@@ -163,7 +161,4 @@ void keyOperation()
 	specialKeyOperation();
 	stdKeyOperation();
 }
-*/
 
-
-#endif /* KEYBOARD_H_ */

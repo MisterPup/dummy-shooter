@@ -15,12 +15,9 @@
 #include "class/MainMenu.h"
 #include "class/Client.h"
 #include "header/globalVariables.h"
-#include "header/gameVariables.h"
 #include "header/keyboard.h"
 #include "header/mouse.h"
 #include "header/menu.h"
-
-#define MULTI_A_CAZ 1
 
 using namespace std;
 
@@ -35,16 +32,20 @@ void initRendering()
 
 void initObject()
 {
+	/*
 	player1 = new PlayerTriangle(base, height);
 	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
 	mainMenu = new MainMenu(buttonSize, colorButton, colorText, font);
 
 	//TEMP TEMP TEMP
 	client = new Client((char*)hostname, port_number);
-	/*client->start(); //da fare solo quando effettivamente stò nel multiplayer*/
+	//client->start(); //da fare solo quando effettivamente stò nel multiplayer
 
 	player2 = new PlayerTriangle(base, height);
 	//TEMP TEMP TEMP
+
+	world = new World2D(worldSizeX, worldSizeY);
+	advancedPlayer = new AdvancedPlayer(base, height);*/
 }
 
 //Called when the window is resized
@@ -67,31 +68,6 @@ void handleResize(int w, int h)
 		       (double)w / (double)h,  //The width-to-height ratio
 			1.0,                   //The near z clipping coordinate
 			200.0);                //The far z clipping coordinate
-}
-
-void drawBoundariesOfWorld()
-{
-	float lineWidth = 3.0f;
-	glLineWidth(lineWidth);
-
-	glBegin(GL_LINES);
-	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(eastWorld, topWorld, 0.0f);
-	glVertex3f(westWorld, topWorld, 0.0f);
-
-	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(eastWorld, bottomWorld, 0.0f);
-	glVertex3f(westWorld, bottomWorld, 0.0f);
-	
-	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(westWorld, bottomWorld, 0.0f);
-	glVertex3f(westWorld, topWorld, 0.0f);
-
-	glColor3f(0.0, 0.0, 1.0); //blue
-	glVertex3f(eastWorld, bottomWorld, 0.0f);
-	glVertex3f(eastWorld, topWorld, 0.0f);
-
-	glEnd();
 }
 
 //Draws the 3D scene
@@ -147,22 +123,26 @@ void drawScene()
 
 	if(mainMenu->isInGame())
 	{
-		drawBoundariesOfWorld();
+		//drawBoundariesOfWorld();
+		world->draw();
 
+		advancedPlayer->draw();
+		/*
 		//------Player1------
 		glPushMatrix();
 
-			glTranslatef(oldPosX, oldPosY, oldPosZ);
+			//glTranslatef(oldPosX, oldPosY, oldPosZ); //oldPosXYZ non servono!
+			glTranslatef(newPosX, newPosY, newPosZ);
 			glRotatef(degRotation, 0.0f, 0.0f, 1.0f);
 
-			oldPosX = newPosX;
-			oldPosY = newPosY;
-			oldPosZ = newPosZ;
+			//oldPosX = newPosX; //oldPosXYZ non servono!
+			//oldPosY = newPosY;
+			//oldPosZ = newPosZ;
 
 			player1->draw();
 		glPopMatrix();
 		//------Player1------
-
+		*/
 		if(mainMenu->isMultiPlayer())
 		{
 			glPushMatrix();
