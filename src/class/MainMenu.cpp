@@ -10,10 +10,9 @@
 #include <GL/glut.h>
 #include "MainMenu.h"
 #include "Button.h"
+#include "../header/utils.h"
 
 using namespace std;
-
-extern int screenToWorldCoordinates(GLfloat* screenCoordinates, int numScreenCoordinates, GLdouble worldCoordinates[3]);
 
 MainMenu::MainMenu(float buttonSize[2], float colorButton[4], float colorText[4], void* font)
 {

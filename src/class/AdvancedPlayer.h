@@ -42,10 +42,17 @@ class AdvancedPlayer
 		float getCurPosY();
 		float getCurPosZ();
 
+		float getDegRotation();
+
 		float getMoveBy();
 		float getRotateBy();
 
 		bool getTeleport();
+
+		void setCurPosX(float curPosX);
+		void setCurPosY(float curPosY);
+		void setCurPosZ(float curPosZ);
+		void setDegRotation(float degRotation);
 		void setTeleport(bool teleport);
 };
 

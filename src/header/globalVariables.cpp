@@ -96,4 +96,7 @@ PlayerTriangle* player2 = new PlayerTriangle(base, height);
 
 World2D* world = new World2D(worldSizeX, worldSizeY);
 AdvancedPlayer* advancedPlayer = new AdvancedPlayer(base, height);
+AdvancedPlayerSystem* advancedPlayerSystem = new AdvancedPlayerSystem(world, advancedPlayer);
+//Keyboard* keyboard = new Keyboard(advancedPlayerSystem, bulletSystem, mainMenu);
+AdvancedBulletSystem* advancedBulletSystem = new AdvancedBulletSystem(world, numBullets, bulletDimY);
 

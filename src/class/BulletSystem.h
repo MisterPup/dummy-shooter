@@ -5,8 +5,8 @@
  *      Author: misterpup
  */
 
-#include <vector>
 #include "Bullet.h"
+#include <vector>
 
 using namespace std;
 

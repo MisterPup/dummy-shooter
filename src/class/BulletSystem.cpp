@@ -22,7 +22,7 @@ BulletSystem::BulletSystem(int numBullets, float bulletDimY, float worldBoundari
 
 void BulletSystem::fire(float shiftX, float shiftY, float shiftZ, float gunRotation, float bulletSpeed)
 {
-	bullets.at(index).shoot(shiftX, shiftY, shiftZ, gunRotation, bulletSpeed);
+	//bullets.at(index).shoot(shiftX, shiftY, shiftZ, gunRotation, bulletSpeed);
 	index = (index + 1)%numBullets;
 }
 
@@ -30,7 +30,7 @@ void BulletSystem::draw()
 {
 	for(int i = 0; i < numBullets; i++)
 	{
-		bullets.at(i).draw();
+		//bullets.at(i).draw();
 	}
 }
 

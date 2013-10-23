@@ -1,44 +1,41 @@
 /*
- * keyboard.cpp
+ * Keyboard.cpp
  *
- *  Created on: 13/ott/2013
+ *  Created on: 22/ott/2013
  *      Author: misterpup
  */
 
-#include "keyboard.h"
-#include "globalVariables.h"
+#include "Keyboard.h"
 #include <GL/glut.h>
-#include <math.h>
 
-/*void modifiersOperation()
-{
-	int mod = glutGetModifiers();
-	cout << mod << endl;
+Keyboard::Keyboard(AdvancedPlayerSystem* advancedPlayerSystem, BulletSystem* bulletSystem, MainMenu* mainMenu) {
+	this->advancedPlayerSystem = advancedPlayerSystem;
+	this->bulletSystem = bulletSystem;
+	this->mainMenu = mainMenu;
 
-	//GLUT_ACTIVE_SHIFT - 1 Set if the Shift modifier or Caps Lock is active.
-	//GLUT_ACTIVE_CTRL  - 2 Set if the Ctrl modifier is active.
-	//GLUT_ACTIVE_ALT   - 4 Set if the Alt modifier is active.
-}*/
+	//bool for key operation: true = pressed, false = unpressed
+	stdKeyStates = new bool[256];
+	specialKeyStates = new bool[256];
+	modifiers = new bool[3]; //SHIFT(or CAPS LOCK)=1, CTRL=2, ALT=4
+}
 
-//bool for key operation: true = pressed, false = unpressed
-bool* stdKeyStates = new bool[256];
-bool* specialKeyStates = new bool[256];
-bool* modifiers = new bool[3]; //SHIFT(or CAPS LOCK)=1, CTRL=2, ALT=4
+Keyboard::~Keyboard() {
+}
 
 //Called when a special key is pressed
-void handleSpecialKeyPress(int key, int x, int y)
+void Keyboard::handleSpecialKeyPress(int key, int x, int y)
 {
 	specialKeyStates[key] = true;
 	//modifiersOperation();
 }
 
-void handleSpecialUpPress(int key, int x, int y)
+void Keyboard::handleSpecialUpPress(int key, int x, int y)
 {
 	specialKeyStates[key] = false;
 }
 
 //Called when a standard key is pressed
-void handleStdKeyPress(unsigned char key, int x, int y)
+void Keyboard::handleStdKeyPress(unsigned char key, int x, int y)
 {
 	if(key == 27) //ESC
 		mainMenu->switchInGame();
@@ -46,12 +43,12 @@ void handleStdKeyPress(unsigned char key, int x, int y)
 	stdKeyStates[key] = true;
 }
 
-void handleStdKeyUpPress(unsigned char key, int x, int y)
+void Keyboard::handleStdKeyUpPress(unsigned char key, int x, int y)
 {
 	stdKeyStates[key] = false;
 }
 
-void specialKeyOperation()
+void Keyboard::specialKeyOperation()
 {
 	if(specialKeyStates[GLUT_KEY_RIGHT])
 	{
@@ -64,7 +61,7 @@ void specialKeyOperation()
 }
 
 //do not use "else if" because then you can't press 'w' and 'space' together
-void stdKeyOperation()
+void Keyboard::stdKeyOperation()
 {
 	//if(stdKeyStates[27]) //Escape key gestita senza buffer
 	//{
@@ -89,15 +86,13 @@ void stdKeyOperation()
 	}
 	if(stdKeyStates[32]) //space
 	{
-		advancedBulletSystem->shoot(advancedPlayer);
 		//bulletSystem->fire(advancedPlayer->getCurPosX(), advancedPlayer->getCurPosY(), advancedPlayer->getCurPosZ(), advancedPlayer->getDegRotation(), bulletSpeed);
 		//keyStates[32] = false; //to avoid bullets to go one over the other (...)
 	}
 }
 
-void keyOperation()
+void Keyboard::keyOperation()
 {
 	specialKeyOperation();
 	stdKeyOperation();
 }
-

@@ -30,24 +30,6 @@ void initRendering()
 	srand(time(NULL));
 }
 
-void initObject()
-{
-	/*
-	player1 = new PlayerTriangle(base, height);
-	bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
-	mainMenu = new MainMenu(buttonSize, colorButton, colorText, font);
-
-	//TEMP TEMP TEMP
-	client = new Client((char*)hostname, port_number);
-	//client->start(); //da fare solo quando effettivamente stò nel multiplayer
-
-	player2 = new PlayerTriangle(base, height);
-	//TEMP TEMP TEMP
-
-	world = new World2D(worldSizeX, worldSizeY);
-	advancedPlayer = new AdvancedPlayer(base, height);*/
-}
-
 //Called when the window is resized
 void handleResize(int w, int h) 
 {
@@ -73,7 +55,7 @@ void handleResize(int w, int h)
 //Draws the 3D scene
 void drawScene() 
 {
-	if(mainMenu->mustExitGame())
+	/*if(mainMenu->mustExitGame())
 		exit(0);
 
 	if(mainMenu->mustConnectToServer())
@@ -105,7 +87,7 @@ void drawScene()
 		degRotation = 0.0f;
 
 		mainMenu->gameHasBeenReset();
-	}
+	}*/
 
 	//Clear information from last draw
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -119,30 +101,16 @@ void drawScene()
 
 	keyOperation();
 
-	mainMenu->draw();
+	world->draw();
+	advancedPlayerSystem->draw();
+	advancedBulletSystem->draw();
+	/*mainMenu->draw();
 
 	if(mainMenu->isInGame())
 	{
-		//drawBoundariesOfWorld();
 		world->draw();
+		advancedPlayerSystem->draw();
 
-		advancedPlayer->draw();
-		/*
-		//------Player1------
-		glPushMatrix();
-
-			//glTranslatef(oldPosX, oldPosY, oldPosZ); //oldPosXYZ non servono!
-			glTranslatef(newPosX, newPosY, newPosZ);
-			glRotatef(degRotation, 0.0f, 0.0f, 1.0f);
-
-			//oldPosX = newPosX; //oldPosXYZ non servono!
-			//oldPosY = newPosY;
-			//oldPosZ = newPosZ;
-
-			player1->draw();
-		glPopMatrix();
-		//------Player1------
-		*/
 		if(mainMenu->isMultiPlayer())
 		{
 			glPushMatrix();
@@ -155,13 +123,13 @@ void drawScene()
 		}
 		//TEMP TEMP TEMP
 		//------Player2------
-		/*glPushMatrix();
+		//glPushMatrix();
 
-			glTranslatef(newPosXOther, newPosYOther, newPosZOther);
-			glRotatef(degRotationOther, 0.0f, 0.0f, 1.0f);
+		//	glTranslatef(newPosXOther, newPosYOther, newPosZOther);
+		//	glRotatef(degRotationOther, 0.0f, 0.0f, 1.0f);
 
-			player2->draw();
-		glPopMatrix();*/
+		//	player2->draw();
+		//glPopMatrix();
 		//------Player2------
 		//TEMP TEMP TEMP
 
@@ -172,7 +140,7 @@ void drawScene()
 			bulletSystem->draw();
 		glPopMatrix();
 		//------Bullets------
-	}
+	}*/
 
 	glutSwapBuffers(); //Send the 3D scene to the screen
 }
@@ -195,15 +163,14 @@ int main(int argc, char** argv) {
 	glutPositionWindow(0,0);
 	
 	initRendering(); //Initialize rendering
-	initObject();
 
 	initMenu();
 
 	//Set handler functions for drawing, keypresses, and window resizes	
-	glutKeyboardFunc(handleStdKeyPress);
-	glutKeyboardUpFunc(handleStdKeyUpPress);
-	glutSpecialFunc(handleSpecialKeyPress);
-	glutSpecialUpFunc(handleSpecialUpPress);
+	glutKeyboardFunc(/*keyboard->*/handleStdKeyPress);
+	glutKeyboardUpFunc(/*keyboard->*/handleStdKeyUpPress);
+	glutSpecialFunc(/*keyboard->*/handleSpecialKeyPress);
+	glutSpecialUpFunc(/*keyboard->*/handleSpecialUpPress);
 	glutMouseFunc(handleMousePress);
 	glutReshapeFunc(handleResize);
 

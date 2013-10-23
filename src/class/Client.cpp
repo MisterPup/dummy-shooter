@@ -16,11 +16,12 @@
 #include <sys/fcntl.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include "../header/globalVariables.h"
 
 using namespace std;
 
-extern float newPosX, newPosY, newPosZ, degRotation;
-extern float newPosXOther, newPosYOther, newPosZOther, degRotationOther;
+//extern float newPosX, newPosY, newPosZ, degRotation;
+//extern float newPosXOther, newPosYOther, newPosZOther, degRotationOther;
 
 void* readWriteSocket(void *t);
 

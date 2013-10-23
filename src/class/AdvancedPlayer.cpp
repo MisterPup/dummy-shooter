@@ -49,7 +49,6 @@ void AdvancedPlayer::move(bool forward)
 		curPosX -= toMoveX;
 		curPosY -= toMoveY;
 	}
-
 }
 
 void AdvancedPlayer::rotate(bool right)
@@ -108,6 +107,11 @@ float AdvancedPlayer::getCurPosZ()
 	return curPosZ;
 }
 
+float AdvancedPlayer::getDegRotation()
+{
+	return degRotation;
+}
+
 float AdvancedPlayer::getMoveBy()
 {
 	return moveBy;
@@ -121,6 +125,24 @@ float AdvancedPlayer::getRotateBy()
 bool AdvancedPlayer::getTeleport()
 {
 	return teleport;
+}
+
+void AdvancedPlayer::setCurPosX(float curPosX)
+{
+	this->curPosX = curPosX;
+}
+void AdvancedPlayer::setCurPosY(float curPosY)
+{
+	this->curPosY = curPosY;
+}
+void AdvancedPlayer::setCurPosZ(float curPosZ)
+{
+	this->curPosZ = curPosZ;
+}
+
+void AdvancedPlayer::setDegRotation(float degRotation)
+{
+	this->degRotation = degRotation;
 }
 
 void AdvancedPlayer::setTeleport(bool teleport)
