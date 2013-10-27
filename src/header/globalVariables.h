@@ -9,15 +9,17 @@
 #ifndef GLOBALVARIABLES_H_
 #define GLOBALVARIABLES_H_
 
-#include "../class/MainMenu.h"
-#include "../class/BulletSystem.h"
-#include "../class/PlayerTriangle.h"
+//#include "../class/MainMenu.h"
 #include "../class/World2D.h"
 #include "../class/AdvancedPlayer.h"
 #include "../class/AdvancedPlayerSystem.h"
 #include "../class/Client.h"
 //#include "../class/input/Keyboard.h"
 #include "../class/AdvancedBulletSystem.h"
+#include "../class/gui/AdvancedMainMenu.h"
+#include <string>
+
+using namespace std;
 
 //Window dimensions
 extern int prevScreenX;
@@ -92,16 +94,21 @@ extern float newPosYOther;
 extern float newPosZOther;
 extern float degRotationOther;
 
-extern PlayerTriangle* player1;
-extern BulletSystem* bulletSystem;
-extern MainMenu* mainMenu;
+//extern PlayerTriangle* player1;
+//extern BulletSystem* bulletSystem;
+//extern PlayerTriangle* player2;
+//extern MainMenu* mainMenu;
 extern World2D* world;
 extern AdvancedPlayer* advancedPlayer;
 extern Client* client;
-extern PlayerTriangle* player2;
+
 extern AdvancedPlayerSystem* advancedPlayerSystem;
 //extern Keyboard* keyboard;
 extern AdvancedBulletSystem* advancedBulletSystem;
+extern AdvancedMainMenu* advancedMainMenu;
+
+extern int numLabels;
+extern string allLabels[];
 
 
 #endif /* GLOBALVARIABLES_H_ */

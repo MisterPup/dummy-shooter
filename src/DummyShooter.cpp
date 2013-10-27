@@ -10,12 +10,9 @@
 #include <math.h>
 #include <GL/glut.h>
 
-#include "class/PlayerTriangle.h"
-#include "class/BulletSystem.h"
-#include "class/MainMenu.h"
 #include "class/Client.h"
 #include "header/globalVariables.h"
-#include "header/keyboard.h"
+#include "header/keyboardManager.h"
 #include "header/mouse.h"
 #include "header/menu.h"
 
@@ -101,9 +98,11 @@ void drawScene()
 
 	keyOperation();
 
-	world->draw();
-	advancedPlayerSystem->draw();
-	advancedBulletSystem->draw();
+	advancedMainMenu->draw();
+
+	//world->draw();
+	//advancedPlayerSystem->draw();
+	//advancedBulletSystem->draw();
 	/*mainMenu->draw();
 
 	if(mainMenu->isInGame())

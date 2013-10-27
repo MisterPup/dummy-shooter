@@ -8,6 +8,8 @@
 #include "globalVariables.h"
 #include <GL/freeglut.h>
 
+using namespace std;
+
 //Window dimensions
 int prevScreenX = 640;
 int prevScreenY = 480;
@@ -83,20 +85,21 @@ float newPosYOther = 0.0f;
 float newPosZOther = 0.0f;
 float degRotationOther = 0.0f;
 
-PlayerTriangle* player1 = new PlayerTriangle(base, height);
-BulletSystem* bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
-MainMenu* mainMenu = new MainMenu(buttonSize, colorButton, colorText, font);
+//PlayerTriangle* player1 = new PlayerTriangle(base, height);
+//BulletSystem* bulletSystem = new BulletSystem(numBullets, bulletDimY, worldBoundaries);
+//PlayerTriangle* player2 = new PlayerTriangle(base, height);
+//MainMenu* mainMenu = new MainMenu(buttonSize, colorButton, colorText, font);
 
-//TEMP TEMP TEMP
 Client* client = new Client((char*)hostname, port_number);
 /*client->start(); //da fare solo quando effettivamente stò nel multiplayer*/
 
-PlayerTriangle* player2 = new PlayerTriangle(base, height);
-//TEMP TEMP TEMP
+int numLabels = 3;
+string allLabels[] = {"SinglePlayer", "MultiPlayer", "Exit Game", "Resume Game", "Quit to Main Menu", "Connect To Server"};
 
 World2D* world = new World2D(worldSizeX, worldSizeY);
 AdvancedPlayer* advancedPlayer = new AdvancedPlayer(base, height);
 AdvancedPlayerSystem* advancedPlayerSystem = new AdvancedPlayerSystem(world, advancedPlayer);
-//Keyboard* keyboard = new Keyboard(advancedPlayerSystem, bulletSystem, mainMenu);
-AdvancedBulletSystem* advancedBulletSystem = new AdvancedBulletSystem(world, numBullets, bulletDimY);
 
+AdvancedBulletSystem* advancedBulletSystem = new AdvancedBulletSystem(world, numBullets, bulletDimY);
+//Keyboard* keyboard = new Keyboard(advancedPlayerSystem, advancedBulletSystem, mainMenu);
+AdvancedMainMenu* advancedMainMenu = new AdvancedMainMenu(allLabels, numLabels);

@@ -9,8 +9,8 @@
 #define KEYBOARD_H_
 
 #include "../AdvancedPlayerSystem.h"
-#include "../BulletSystem.h"
-#include "../MainMenu.h"
+#include "../AdvancedBulletSystem.h"
+//#include "../MainMenu.h"
 
 class Keyboard {
 
@@ -21,13 +21,13 @@ class Keyboard {
 		bool* specialKeyStates;
 		bool* modifiers; //SHIFT(or CAPS LOCK)=1, CTRL=2, ALT=4
 
-		AdvancedPlayerSystem* advancedPlayerSystem;
-		BulletSystem* bulletSystem;
-		MainMenu* mainMenu;
+		AdvancedPlayerSystem* playerSystem;
+		AdvancedBulletSystem* bulletSystem;
+		//MainMenu* mainMenu;
 
 	public:
 
-		Keyboard(AdvancedPlayerSystem* advancedPlayerSystem, BulletSystem* bulletSystem, MainMenu* mainMenu);
+		Keyboard(AdvancedPlayerSystem* advancedPlayerSystem, AdvancedBulletSystem* bulletSystem/*, MainMenu* mainMenu*/);
 		virtual ~Keyboard();
 
 		//Called when a special key is pressed

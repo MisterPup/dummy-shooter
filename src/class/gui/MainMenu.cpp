@@ -10,10 +10,10 @@
 #include <GL/glut.h>
 #include "MainMenu.h"
 #include "Button.h"
-#include "../header/utils.h"
+#include "../../header/utils.h"
 
 using namespace std;
-
+/*
 MainMenu::MainMenu(float buttonSize[2], float colorButton[4], float colorText[4], void* font)
 {
 	numButton = 2;
@@ -328,3 +328,4 @@ bool MainMenu::checkMustDisconnect()
 	else
 		return false;
 }
+*/

@@ -8,10 +8,10 @@
 #include "Keyboard.h"
 #include <GL/glut.h>
 
-Keyboard::Keyboard(AdvancedPlayerSystem* advancedPlayerSystem, BulletSystem* bulletSystem, MainMenu* mainMenu) {
-	this->advancedPlayerSystem = advancedPlayerSystem;
+Keyboard::Keyboard(AdvancedPlayerSystem* advancedPlayerSystem, AdvancedBulletSystem* bulletSystem/*, MainMenu* mainMenu*/) {
+	this->playerSystem = advancedPlayerSystem;
 	this->bulletSystem = bulletSystem;
-	this->mainMenu = mainMenu;
+	//this->mainMenu = mainMenu;
 
 	//bool for key operation: true = pressed, false = unpressed
 	stdKeyStates = new bool[256];
@@ -37,8 +37,8 @@ void Keyboard::handleSpecialUpPress(int key, int x, int y)
 //Called when a standard key is pressed
 void Keyboard::handleStdKeyPress(unsigned char key, int x, int y)
 {
-	if(key == 27) //ESC
-		mainMenu->switchInGame();
+	//if(key == 27) //ESC
+	//	mainMenu->switchInGame();
 
 	stdKeyStates[key] = true;
 }
@@ -52,11 +52,11 @@ void Keyboard::specialKeyOperation()
 {
 	if(specialKeyStates[GLUT_KEY_RIGHT])
 	{
-		advancedPlayerSystem->rotate(true);
+		playerSystem->rotate(true);
 	}
 	if(specialKeyStates[GLUT_KEY_LEFT])
 	{
-		advancedPlayerSystem->rotate(false);
+		playerSystem->rotate(false);
 	}
 }
 
@@ -70,11 +70,11 @@ void Keyboard::stdKeyOperation()
 	//}
 	if(stdKeyStates['w']) //119
 	{
-		advancedPlayerSystem->move(true);
+		playerSystem->move(true);
 	}
 	if(stdKeyStates['s']) //115
 	{
-		advancedPlayerSystem->move(false);
+		playerSystem->move(false);
 	}
 	if(stdKeyStates['a']) //97
 	{

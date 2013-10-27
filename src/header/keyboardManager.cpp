@@ -5,7 +5,7 @@
  *      Author: misterpup
  */
 
-#include "keyboard.h"
+#include "keyboardManager.h"
 #include "globalVariables.h"
 #include <GL/glut.h>
 #include <math.h>
@@ -40,8 +40,8 @@ void handleSpecialUpPress(int key, int x, int y)
 //Called when a standard key is pressed
 void handleStdKeyPress(unsigned char key, int x, int y)
 {
-	if(key == 27) //ESC
-		mainMenu->switchInGame();
+	//if(key == 27) //ESC
+	//	mainMenu->switchInGame();
 
 	stdKeyStates[key] = true;
 }
