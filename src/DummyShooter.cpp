@@ -83,6 +83,8 @@ void drawScene()
 	Keyboard::keyOperation();
 	renderer->draw();
 
+
+
 	glutSwapBuffers();
 }
 

@@ -1,0 +1,111 @@
+/*
+ * IEnemy2D.cpp
+ *
+ *  Created on: 24/dic/2013
+ *      Author: misterpup
+ */
+
+#include "IEnemy2D.h"
+#include "math.h"
+
+IEnemy2D::IEnemy2D()
+{
+	posX = 0.0f;
+	posY = 0.0f;
+	posZ = 0.0f;
+	degRotation = 0.0f;
+	moveBy = 0.15f;
+	rotateBy = 10.0f;
+}
+
+IEnemy2D::~IEnemy2D()
+{
+}
+
+void IEnemy2D::move(bool forward)
+{
+	float radRotation = 2*M_PI*degRotation/360; //rotation in radiants
+
+	//radRotation is negative when you press LEFT
+	float toMoveX = moveBy*cos(M_PI/2 + radRotation);
+	float toMoveY = moveBy*sin(M_PI/2 + radRotation);
+
+	if(forward)
+	{
+		posX += toMoveX;
+		posY += toMoveY;
+	}
+	else
+	{
+		posX -= toMoveX;
+		posY -= toMoveY;
+	}
+}
+
+void IEnemy2D::rotate(bool right)
+{
+	if(right)
+		degRotation += rotateBy;
+	else
+		degRotation -= rotateBy;
+}
+
+float IEnemy2D::getDegRotation() const
+{
+	return degRotation;
+}
+
+void IEnemy2D::setDegRotation(float degRotation)
+{
+	this->degRotation = degRotation;
+}
+
+float IEnemy2D::getMoveBy() const
+{
+	return moveBy;
+}
+
+void IEnemy2D::setMoveBy(float moveBy)
+{
+	this->moveBy = moveBy;
+}
+
+float IEnemy2D::getPosX() const
+{
+	return posX;
+}
+
+void IEnemy2D::setPosX(float posX)
+{
+	this->posX = posX;
+}
+
+float IEnemy2D::getPosY() const
+{
+	return posY;
+}
+
+void IEnemy2D::setPosY(float posY)
+{
+	this->posY = posY;
+}
+
+float IEnemy2D::getPosZ() const
+{
+	return posZ;
+}
+
+void IEnemy2D::setPosZ(float posZ)
+{
+	this->posZ = posZ;
+}
+
+float IEnemy2D::getRotateBy() const
+{
+	return rotateBy;
+}
+
+void IEnemy2D::setRotateBy(float rotateBy)
+{
+	this->rotateBy = rotateBy;
+}

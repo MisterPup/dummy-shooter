@@ -6,6 +6,8 @@
  */
 
 #include "Game.h"
+#include "enemy/EnemyTriangle.h"
+#include "enemy/EnemyCircle.h"
 #include <iostream>
 
 using namespace std;
@@ -150,6 +152,11 @@ void Game::drawSinglePlayer()
 	world.draw();
 	playerSystem.draw();
 	bulletSystem.draw();
+
+	//EnemyTriangle enemyTriangle;
+	//enemyTriangle.draw();
+	EnemyCircle enemyCircle;
+	enemyCircle.draw();
 }
 
 void Game::drawMultiPlayer()
