@@ -19,11 +19,14 @@ class IEnemy2D
 		float degRotation;
 		float moveBy;
 		float rotateBy;
+		float distanceFromPlayerToReach;
 
 	public:
 
 		IEnemy2D();
 		virtual ~IEnemy2D();
+		IEnemy2D(const IEnemy2D& other);
+		IEnemy2D& operator=(const IEnemy2D& other);
 
 		void move(bool forward);
 		void rotate(bool right);
@@ -42,6 +45,8 @@ class IEnemy2D
 		void setPosZ(float posZ);
 		float getRotateBy() const;
 		void setRotateBy(float rotateBy);
+		virtual float getDistanceFromPlayerToReach() const;
+		virtual void setDistanceFromPlayerToReach(float distanceFromPlayerToReach);
 };
 
 #endif /* IENEMY2D_H_ */

@@ -16,8 +16,11 @@ class Triangle
 		float height;
 
 	public:
+		Triangle();
 		Triangle(float base, float height);
 		virtual ~Triangle();
+		Triangle(const Triangle& other);
+		Triangle& operator=(const Triangle& other);
 
 		float getBase() const;
 		float getHeight() const;

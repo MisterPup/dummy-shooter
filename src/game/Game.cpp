@@ -54,6 +54,11 @@ void Game::initObject()
 
 	Bullet2DSystem tempBulletSystem(world, numBullets, bulletDimY);
 	bulletSystem = tempBulletSystem;
+
+	//-------------------------------------------------------//
+
+	EnemyManager tempEnemyManager(world);
+	enemyManager = tempEnemyManager;
 }
 
 void Game::initSinglePlayerGame()
@@ -152,11 +157,7 @@ void Game::drawSinglePlayer()
 	world.draw();
 	playerSystem.draw();
 	bulletSystem.draw();
-
-	//EnemyTriangle enemyTriangle;
-	//enemyTriangle.draw();
-	EnemyCircle enemyCircle;
-	enemyCircle.draw();
+	enemyManager.manage(playerSystem);
 }
 
 void Game::drawMultiPlayer()

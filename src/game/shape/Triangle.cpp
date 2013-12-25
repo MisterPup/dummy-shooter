@@ -18,6 +18,26 @@ Triangle::~Triangle()
 {
 }
 
+Triangle::Triangle()
+{
+	base = 0.5f;
+	height = 0.5;
+}
+
+Triangle::Triangle(const Triangle& other)
+{
+	base = other.base;
+	height = other.height;
+}
+
+Triangle& Triangle::operator =(const Triangle& other)
+{
+	base = other.base;
+	height = other.height;
+
+	return *this;
+}
+
 void Triangle::draw()
 {
 	float halfBase = base/2;

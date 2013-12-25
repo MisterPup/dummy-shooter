@@ -12,10 +12,15 @@
 
 class EnemyTriangle: public IEnemy2D
 {
+	private:
+		float distanceFromPlayerToReach;
+
 	public:
 		EnemyTriangle();
 		virtual ~EnemyTriangle();
 		virtual void draw();
+		float getDistanceFromPlayerToReach() const;
+		void setDistanceFromPlayerToReach(float distanceFromPlayerToReach);
 };
 
 #endif /* ENEMYTRIANGLE_H_ */

@@ -16,10 +16,35 @@ IEnemy2D::IEnemy2D()
 	degRotation = 0.0f;
 	moveBy = 0.15f;
 	rotateBy = 10.0f;
+	distanceFromPlayerToReach = 2.0f;
 }
 
 IEnemy2D::~IEnemy2D()
 {
+}
+
+IEnemy2D::IEnemy2D(const IEnemy2D& other)
+{
+	posX = other.posX;
+	posY = other.posY;
+	posZ = other.posZ;
+	degRotation = other.degRotation;
+	moveBy = other.moveBy;
+	rotateBy = other.rotateBy;
+	distanceFromPlayerToReach = other.distanceFromPlayerToReach;
+}
+
+IEnemy2D& IEnemy2D::operator =(const IEnemy2D& other)
+{
+	posX = other.posX;
+	posY = other.posY;
+	posZ = other.posZ;
+	degRotation = other.degRotation;
+	moveBy = other.moveBy;
+	rotateBy = other.rotateBy;
+	distanceFromPlayerToReach = other.distanceFromPlayerToReach;
+
+	return *this;
 }
 
 void IEnemy2D::move(bool forward)
@@ -108,4 +133,14 @@ float IEnemy2D::getRotateBy() const
 void IEnemy2D::setRotateBy(float rotateBy)
 {
 	this->rotateBy = rotateBy;
+}
+
+float IEnemy2D::getDistanceFromPlayerToReach() const
+{
+	return distanceFromPlayerToReach;
+}
+
+void IEnemy2D::setDistanceFromPlayerToReach(float distanceFromPlayerToReach)
+{
+	this->distanceFromPlayerToReach = distanceFromPlayerToReach;
 }

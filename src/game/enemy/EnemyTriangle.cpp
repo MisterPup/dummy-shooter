@@ -12,7 +12,7 @@
 
 EnemyTriangle::EnemyTriangle():IEnemy2D()
 {
-
+	distanceFromPlayerToReach = 2.0f;
 }
 
 EnemyTriangle::~EnemyTriangle()
@@ -31,4 +31,14 @@ void EnemyTriangle::draw()
 		Triangle triangle(base, height);
 		triangle.draw();
 	glPopMatrix();
+}
+
+float EnemyTriangle::getDistanceFromPlayerToReach() const
+{
+	return distanceFromPlayerToReach;
+}
+
+void EnemyTriangle::setDistanceFromPlayerToReach(float distanceFromPlayerToReach)
+{
+	this->distanceFromPlayerToReach = distanceFromPlayerToReach;
 }

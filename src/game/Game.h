@@ -12,6 +12,7 @@
 #include "World2D.h"
 #include "Bullet2DSystem.h"
 #include "Player2DSystem.h"
+#include "enemy/EnemyManager.h"
 
 class Game: public IRenderable
 {
@@ -22,6 +23,7 @@ class Game: public IRenderable
 		World2D world;
 		Player2DSystem playerSystem;
 		Bullet2DSystem bulletSystem;
+		EnemyManager enemyManager;
 
 		bool singlePlayer;
 

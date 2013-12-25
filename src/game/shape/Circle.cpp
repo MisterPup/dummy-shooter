@@ -20,6 +20,29 @@ Circle::~Circle()
 {
 }
 
+Circle::Circle()
+{
+	radius = 0.5;
+	num_segments = 50;
+	filled = true;
+}
+
+Circle::Circle(const Circle& other)
+{
+	radius = other.radius;
+	num_segments = other.num_segments;
+	filled = other.filled;
+}
+
+Circle& Circle::operator =(const Circle& other)
+{
+	radius = other.radius;
+	num_segments = other.num_segments;
+	filled = other.filled;
+
+	return *this;
+}
+
 void Circle::draw()
 {
 	if(filled)
@@ -55,4 +78,14 @@ float Circle::getRadius() const
 void Circle::setRadius(float radius)
 {
 	this->radius = radius;
+}
+
+bool Circle::isFilled() const
+{
+	return filled;
+}
+
+void Circle::setFilled(bool filled)
+{
+	this->filled = filled;
 }
