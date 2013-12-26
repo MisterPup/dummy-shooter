@@ -114,6 +114,12 @@ void Player2D::rotate(bool right)
 		degRotation += rotateBy;
 	else
 		degRotation -= rotateBy;
+
+	if(degRotation > 360)
+		degRotation -= 360;
+
+	if(degRotation < -360)
+		degRotation += 360;
 }
 
 void Player2D::draw()

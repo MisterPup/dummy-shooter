@@ -46,7 +46,7 @@ void Triangle::draw()
 	glBegin(GL_TRIANGLES);
 		glVertex3f(-halfBase, -halfHeight, 0.0f);
 		glVertex3f(halfBase, -halfHeight, 0.0f);
-		glColor3f(0.0, 1.0, 0.0);
+		glColor3f(0.0, 0.0, 1.0);
 		glVertex3f(0.0f, halfHeight, 0.0f);
 	glEnd();
 }

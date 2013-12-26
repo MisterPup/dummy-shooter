@@ -12,6 +12,12 @@
 
 EnemyTriangle::EnemyTriangle():IEnemy2D()
 {
+	moveBy = 0.05f;
+	rotateBy = 5.0f;
+
+	setMoveBy(moveBy);
+	setRotateBy(rotateBy);
+
 	distanceFromPlayerToReach = 2.0f;
 }
 
