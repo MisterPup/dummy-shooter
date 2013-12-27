@@ -77,7 +77,7 @@ void IEnemy2D::rotate(bool right)
 	if(degRotation > 360)
 		degRotation -= 360;
 
-	if(degRotation < -360)
+	if(degRotation < 0)
 		degRotation += 360;
 }
 

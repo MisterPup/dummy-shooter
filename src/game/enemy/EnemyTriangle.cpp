@@ -12,13 +12,13 @@
 
 EnemyTriangle::EnemyTriangle():IEnemy2D()
 {
-	moveBy = 0.05f;
-	rotateBy = 5.0f;
+	float moveBy = 0.05;
+	float rotateBy = 5.0f;
+	float distanceFromPlayerToReach = 2.0f;
 
 	setMoveBy(moveBy);
 	setRotateBy(rotateBy);
-
-	distanceFromPlayerToReach = 2.0f;
+	setDistanceFromPlayerToReach(distanceFromPlayerToReach);
 }
 
 EnemyTriangle::~EnemyTriangle()
@@ -37,14 +37,4 @@ void EnemyTriangle::draw()
 		Triangle triangle(base, height);
 		triangle.draw();
 	glPopMatrix();
-}
-
-float EnemyTriangle::getDistanceFromPlayerToReach() const
-{
-	return distanceFromPlayerToReach;
-}
-
-void EnemyTriangle::setDistanceFromPlayerToReach(float distanceFromPlayerToReach)
-{
-	this->distanceFromPlayerToReach = distanceFromPlayerToReach;
 }

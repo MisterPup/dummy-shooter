@@ -114,51 +114,33 @@ void EnemyManager::changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem 
 	float dotProduct = newPlayerY; //0*newPlayerX + 1*newPlayerY
 	float modulesEnemy = 1; //sqrt(pow(0, 2) + pow(1, 2))
 	float modulesPlayer = sqrt(pow(newPlayerX, 2) + pow(newPlayerY, 2));
-	float arccosInDegree = acos(dotProduct/(modulesEnemy*modulesPlayer))*180/M_PI;
+	float arccosInDegree = acos(dotProduct/(modulesEnemy*modulesPlayer))*180/M_PI; //se giocatore và esattamente su nemico, rischio di divisione per zero
 
-	float posEnemyDeg = enemy->getDegRotation() < 0 ? -enemy->getDegRotation() : enemy->getDegRotation();
-	//cout << "arc " << arccosInDegree << endl;
-	//cout << "deg " << posEnemyDeg << endl;
+	if(newPlayerX > 0)
+		arccosInDegree = 360 - arccosInDegree;
 
-	float diff = abs(arccosInDegree - posEnemyDeg);
-	//cout << diff << endl;
+	float enemyDeg = enemy->getDegRotation();
+	float diff = arccosInDegree - enemyDeg;
 
-	if(diff > 3.0f)
+	if(abs(diff) > 3.0f)
 	{
-		float rightDiff;
-		float leftDiff;
-
-		if(enemy->getDegRotation() < 0)
+		bool right = true;
+		if(diff < 0)
 		{
-			rightDiff = abs(arccosInDegree - (posEnemyDeg - enemy->getRotateBy()));
-			leftDiff = abs(arccosInDegree - (posEnemyDeg + enemy->getRotateBy()));
+			if(abs(diff) > 180)
+				enemy->rotate(right);
+			else
+				enemy->rotate(!right);
 		}
-		else if(enemy->getDegRotation() > 0)
-		{
-			cout << "c\n";
-			rightDiff = abs(arccosInDegree - (posEnemyDeg + enemy->getRotateBy()));
-			leftDiff = abs(arccosInDegree - (posEnemyDeg - enemy->getRotateBy()));
-		}
-		else //enemy->getDegRotation() == 0
-		{
-			if(newPlayerX > 0) //giocatore a sinistra, devo girare a sinistra
-			{
-				rightDiff = 1;
-				leftDiff = 0;
-			}
-			else //giocatore a destra, devo girare a destra
-			{
-				rightDiff = 0;
-				leftDiff = 1;
-			}
-		}
-
-		if(rightDiff < leftDiff)
-			enemy->rotate(true);
 		else
-			enemy->rotate(false);
+		{
+			if(diff > 180)
+				enemy->rotate(!right);
+			else
+				enemy->rotate(right);
+		}
 	}
-	/*else //ora che ho sistemato la rotazione, posso avvicinarmi
+	else //ora che ho sistemato la rotazione, posso avvicinarmi
 	{
 		//aggiusta direzione
 
@@ -169,7 +151,7 @@ void EnemyManager::changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem 
 
 		if(euclideanDistance > distanceFromPlayerToReach) //nemico lontano da giocatore
 			enemy->move(true);
-	}*/
+	}
 }
 
 void EnemyManager::draw(IEnemy2D* enemy)

@@ -45,8 +45,8 @@ class IEnemy2D
 		void setPosZ(float posZ);
 		float getRotateBy() const;
 		void setRotateBy(float rotateBy);
-		virtual float getDistanceFromPlayerToReach() const;
-		virtual void setDistanceFromPlayerToReach(float distanceFromPlayerToReach);
+		float getDistanceFromPlayerToReach() const;
+		void setDistanceFromPlayerToReach(float distanceFromPlayerToReach);
 };
 
 #endif /* IENEMY2D_H_ */

@@ -13,14 +13,11 @@
 class EnemyCircle: public IEnemy2D
 {
 	private:
-		float distanceFromPlayerToReach;
 
 	public:
 		EnemyCircle();
 		virtual ~EnemyCircle();
 		void draw();
-		float getDistanceFromPlayerToReach() const;
-		void setDistanceFromPlayerToReach(float distanceFromPlayerToReach);
 };
 
 #endif /* ENEMYCIRCLE_H_ */

@@ -11,7 +11,8 @@
 
 EnemyCircle::EnemyCircle()
 {
-	distanceFromPlayerToReach = 3.0f;
+	float distanceFromPlayerToReach = 3.0f;
+	setDistanceFromPlayerToReach(distanceFromPlayerToReach);
 }
 
 EnemyCircle::~EnemyCircle()
@@ -31,14 +32,4 @@ void EnemyCircle::draw()
 		Circle circle(radius, numSegments, filled);
 		circle.draw();
 	glPopMatrix();
-}
-
-float EnemyCircle::getDistanceFromPlayerToReach() const
-{
-	return distanceFromPlayerToReach;
-}
-
-void EnemyCircle::setDistanceFromPlayerToReach(float distanceFromPlayerToReach)
-{
-	this->distanceFromPlayerToReach = distanceFromPlayerToReach;
 }
