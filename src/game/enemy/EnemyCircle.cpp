@@ -11,8 +11,8 @@
 
 EnemyCircle::EnemyCircle()
 {
-	float distanceFromPlayerToReach = 3.0f;
-	setDistanceFromPlayerToReach(distanceFromPlayerToReach);
+	//float distanceFromPlayerToReach = 3.0f;
+	//setDistanceFromPlayerToReach(distanceFromPlayerToReach);
 }
 
 EnemyCircle::~EnemyCircle()
@@ -26,8 +26,6 @@ void EnemyCircle::draw()
 		glTranslatef(getPosX(), getPosY(), getPosZ());
 		glRotatef(getDegRotation(), 0.0f, 0.0f, 1.0f);
 
-		float radius = 0.2;
-		int numSegments = 100;
 		bool filled = true;
 		Circle circle(radius, numSegments, filled);
 		circle.draw();

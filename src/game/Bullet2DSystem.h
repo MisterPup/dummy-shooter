@@ -34,6 +34,8 @@ class Bullet2DSystem {
 		void shoot(Player2D player);
 		void draw();
 		bool checkInsideWorld(Bullet2D bullet, int indexInBullets);
+
+		const vector<Bullet2D>& getBullets() const;
 };
 
 #endif /* BULLET2DSYSTEM_H_ */

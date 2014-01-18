@@ -8,6 +8,8 @@
 #ifndef IENEMY2D_H_
 #define IENEMY2D_H_
 
+#include "../shape/Circle.h"
+
 class IEnemy2D
 {
 
@@ -47,6 +49,8 @@ class IEnemy2D
 		void setRotateBy(float rotateBy);
 		float getDistanceFromPlayerToReach() const;
 		void setDistanceFromPlayerToReach(float distanceFromPlayerToReach);
+
+		//virtual Circle getCircleAroundEnemy() = 0;
 };
 
 #endif /* IENEMY2D_H_ */

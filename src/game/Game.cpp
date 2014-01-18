@@ -157,7 +157,7 @@ void Game::drawSinglePlayer()
 	world.draw();
 	playerSystem.draw();
 	bulletSystem.draw();
-	enemyManager.manage(playerSystem);
+	enemyManager.manage(playerSystem, bulletSystem);
 }
 
 void Game::drawMultiPlayer()

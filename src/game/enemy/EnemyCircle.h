@@ -13,6 +13,8 @@
 class EnemyCircle: public IEnemy2D
 {
 	private:
+		float radius = 0.2;
+		int numSegments = 100;
 
 	public:
 		EnemyCircle();

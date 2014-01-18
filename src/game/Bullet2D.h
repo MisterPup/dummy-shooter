@@ -26,8 +26,9 @@ class Bullet2D {
 		Bullet2D(float bodyDimY, float shootPosX, float shootPosY, float shootPosZ, float shootRotation);
 		virtual ~Bullet2D();
 
-		float getPosX();
-		float getPosY();
+		float getPosX() const;
+		float getPosY() const;
+		float getBodyDimY() const;
 
 		void draw();
 };

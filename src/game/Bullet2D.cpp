@@ -27,7 +27,7 @@ Bullet2D::~Bullet2D()
 {
 }
 
-float Bullet2D::getPosY()
+float Bullet2D::getPosY() const
 {
 
 	float bodyPosY1 = bulletPos;
@@ -39,7 +39,7 @@ float Bullet2D::getPosY()
 	return bulletPosY;
 }
 
-float Bullet2D::getPosX()
+float Bullet2D::getPosX() const
 {
 	float bodyPosY1 = bulletPos;
 	float bodyPosY2 = bodyPosY1 + bodyDimY;
@@ -69,4 +69,9 @@ void Bullet2D::draw()
 	glPopMatrix();
 
 	bulletPos += bulletSpeed;
+}
+
+float Bullet2D::getBodyDimY() const
+{
+	return bodyDimY;
 }

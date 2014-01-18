@@ -47,11 +47,11 @@ EnemyManager& EnemyManager::operator =(const EnemyManager& other)
 
 void EnemyManager::init()
 {
-	maxNumEnemies = 1;
+	maxNumEnemies = 2;
 	srand(time(NULL));
 }
 
-void EnemyManager::manage(Player2DSystem playerSystem)
+void EnemyManager::manage(Player2DSystem playerSystem, Bullet2DSystem bulletSystem)
 {
 	bool mustCreate = checkIfNewMustCreated();
 	if(mustCreate)
@@ -65,6 +65,25 @@ void EnemyManager::manage(Player2DSystem playerSystem)
 	}
 }
 
+void EnemyManager::checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem)
+{
+	/*vector<Bullet2D> bullets = bulletSystem.getBullets();
+	for(int i = 0; i < bullets.size(); i++)
+	{
+		Bullet2D curBullet = bullets.at(i);
+
+		float bulletPosX = curBullet.getPosX();
+		float bulletPosY = curBullet.getPosY();
+		float bulletDimY = curBullet.getBodyDimY();
+
+		float enemyPosX = enemy->getPosX();
+		float enemyPosY = enemy->getPosY();
+
+
+	}*/
+}
+
+//TODO simple stub. Al momento è ridondante
 bool EnemyManager::checkIfNewMustCreated()
 {
 	if(enemies.size() < maxNumEnemies)
@@ -75,32 +94,38 @@ bool EnemyManager::checkIfNewMustCreated()
 
 void EnemyManager::createEnemy()
 {
-	//rand() per scegliere fra tipi di nemici da creare
-	IEnemy2D* enemy = new EnemyTriangle();
-	enemies.push_back(enemy);
+	while(enemies.size() < maxNumEnemies)
+	{
+		//rand() per scegliere fra tipi di nemici da creare
+		IEnemy2D* enemy = new EnemyTriangle();
+		enemies.push_back(enemy);
 
-	choosePositionToCreate(enemy);
+		choosePositionToCreate(enemy);
+	}
 }
 
+//TODO simple stub
 void EnemyManager::choosePositionToCreate(IEnemy2D* enemy)
 {
-	enemy->setPosX(world.getRightWorld()/2.0f);
-	enemy->setPosY(world.getTopWorld()/2.0f);
-	/*float boundaries[4] = {world.getTopWorld(), world.getBottomWorld(), world.getRightWorld(), world.getLeftWorld()};
-	int randomBoundary = rand()%4;
+	//enemy->setPosX(world.getRightWorld()/2.0f);
+	//enemy->setPosY(world.getTopWorld()/2.0f);
 
-	if(randomBoundary == 0 || randomBoundary == 1)
-	{
-		int length = abs(boundaries[2] - boundaries[3]);
+	int rightWorld = (int)world.getRightWorld();
+	int topWorld = (int)world.getTopWorld();
 
-	}
-	else if(randomBoundary == 2 || randomBoundary == 3)
-	{
-		int length = abs(boundaries[0] - boundaries[1]);
+	int xCoord = rand()%rightWorld;
+	int xSign = rand()%2;
+	xCoord = (xSign == 0) ? xCoord : -xCoord;
 
-	}*/
+	int yCoord = rand()%topWorld;
+	int ySign = rand()%2;
+	yCoord = (ySign == 0) ? yCoord : -yCoord;
+
+	enemy->setPosX(xCoord);
+	enemy->setPosY(yCoord);
 }
 
+//TODO move this code into enemy
 void EnemyManager::changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem playerSystem)
 {
 	Player2D player = playerSystem.getPlayer();
@@ -122,7 +147,7 @@ void EnemyManager::changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem 
 	float enemyDeg = enemy->getDegRotation();
 	float diff = arccosInDegree - enemyDeg;
 
-	if(abs(diff) > 3.0f)
+	if(abs(diff) > 4.0f) //se troppo piccola rispetto alla rotazione del cannone del nemico, prova a spostare in continuazione verso destra e sinistra
 	{
 		bool right = true;
 		if(diff < 0)

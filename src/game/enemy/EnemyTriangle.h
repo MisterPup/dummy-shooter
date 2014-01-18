@@ -13,7 +13,8 @@
 class EnemyTriangle: public IEnemy2D
 {
 	private:
-
+		float base = 0.5f;
+		float height = 0.5f;
 
 	public:
 		EnemyTriangle();

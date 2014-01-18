@@ -12,13 +12,13 @@
 
 EnemyTriangle::EnemyTriangle():IEnemy2D()
 {
-	float moveBy = 0.05;
-	float rotateBy = 5.0f;
-	float distanceFromPlayerToReach = 2.0f;
+	//float moveBy = 0.05;
+	//float rotateBy = 5.0f;
+	//float distanceFromPlayerToReach = 2.0f;
 
-	setMoveBy(moveBy);
-	setRotateBy(rotateBy);
-	setDistanceFromPlayerToReach(distanceFromPlayerToReach);
+	//setMoveBy(moveBy);
+	//setRotateBy(rotateBy);
+	//setDistanceFromPlayerToReach(distanceFromPlayerToReach);
 }
 
 EnemyTriangle::~EnemyTriangle()
@@ -32,9 +32,8 @@ void EnemyTriangle::draw()
 		glTranslatef(getPosX(), getPosY(), getPosZ());
 		glRotatef(getDegRotation(), 0.0f, 0.0f, 1.0f);
 
-		float base = 0.5f;
-		float height = 0.5f;
 		Triangle triangle(base, height);
 		triangle.draw();
 	glPopMatrix();
 }
+

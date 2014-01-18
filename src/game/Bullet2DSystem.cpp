@@ -74,3 +74,8 @@ bool Bullet2DSystem::checkInsideWorld(Bullet2D bullet, int indexInBullets)
 
 	return true;
 }
+
+const vector<Bullet2D>& Bullet2DSystem::getBullets() const
+{
+	return bullets;
+}

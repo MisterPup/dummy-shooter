@@ -11,6 +11,7 @@
 #include "IEnemy2D.h"
 #include "../World2D.h"
 #include "../Player2DSystem.h"
+#include "../Bullet2DSystem.h"
 #include <vector>
 
 using namespace std;
@@ -28,6 +29,7 @@ class EnemyManager
 		void createEnemy();
 		void choosePositionToCreate(IEnemy2D* enemy);
 		void changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem playerSystem);
+		void checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem);
 		void draw(IEnemy2D* enemy);
 
 	public:
@@ -38,7 +40,7 @@ class EnemyManager
 		EnemyManager(const EnemyManager& other);
 		EnemyManager& operator=(const EnemyManager& other);
 
-		void manage(Player2DSystem playerSystem);
+		void manage(Player2DSystem playerSystem, Bullet2DSystem bulletSystem);
 };
 
 #endif /* ENEMYMANAGER_H_ */
