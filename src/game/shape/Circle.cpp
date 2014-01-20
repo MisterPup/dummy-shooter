@@ -60,6 +60,12 @@ void Circle::draw()
 	glEnd();
 }
 
+//TODO simple stub
+bool Circle::isInside(float shapeX, float shapeY, float pointX, float pointY) const
+{
+	return false;
+}
+
 int Circle::getNumSegments() const
 {
 	return num_segments;
@@ -88,4 +94,14 @@ bool Circle::isFilled() const
 void Circle::setFilled(bool filled)
 {
 	this->filled = filled;
+}
+
+IShape2D* Circle::create() const
+{
+	return new Circle();
+}
+
+IShape2D* Circle::clone() const
+{
+	return new Circle(*this);
 }

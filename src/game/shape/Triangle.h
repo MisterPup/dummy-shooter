@@ -8,7 +8,9 @@
 #ifndef TRIANGLE_H_
 #define TRIANGLE_H_
 
-class Triangle
+#include "../shape/IShape2D.h"
+
+class Triangle: public IShape2D
 {
 
 	private:
@@ -22,12 +24,16 @@ class Triangle
 		Triangle(const Triangle& other);
 		Triangle& operator=(const Triangle& other);
 
+		virtual void draw();
+		virtual bool isInside(float shapeX, float shapeY, float pointX, float pointY) const;
+
+		virtual IShape2D* create() const; // Virtual constructor (creation)
+		virtual IShape2D* clone() const;  // Virtual constructor (copying)
+
 		float getBase() const;
 		float getHeight() const;
 		void setBase(float base);
 		void setHeight(float height);
-
-		void draw();
 };
 
 #endif /* TRIANGLE_H_ */

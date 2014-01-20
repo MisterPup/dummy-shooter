@@ -6,12 +6,15 @@
  */
 
 #include "EnemyTriangle.h"
-#include "../shape/Triangle.h"
 #include <GL/glut.h>
 #include <math.h>
 
 EnemyTriangle::EnemyTriangle():IEnemy2D()
 {
+	float base = 0.5f;
+	float height = 0.5f;
+	Triangle triangle(base, height);
+	setShape(&triangle);
 	//float moveBy = 0.05;
 	//float rotateBy = 5.0f;
 	//float distanceFromPlayerToReach = 2.0f;
@@ -31,9 +34,6 @@ void EnemyTriangle::draw()
 	glPushMatrix();
 		glTranslatef(getPosX(), getPosY(), getPosZ());
 		glRotatef(getDegRotation(), 0.0f, 0.0f, 1.0f);
-
-		Triangle triangle(base, height);
-		triangle.draw();
+		getShape()->draw();
 	glPopMatrix();
 }
-

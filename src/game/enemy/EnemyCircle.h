@@ -9,16 +9,16 @@
 #define ENEMYCIRCLE_H_
 
 #include "IEnemy2D.h"
+#include "../shape/Circle.h"
 
 class EnemyCircle: public IEnemy2D
 {
 	private:
-		float radius = 0.2;
-		int numSegments = 100;
 
 	public:
 		EnemyCircle();
 		virtual ~EnemyCircle();
+
 		void draw();
 };
 

@@ -29,7 +29,7 @@ class EnemyManager
 		void createEnemy();
 		void choosePositionToCreate(IEnemy2D* enemy);
 		void changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem playerSystem);
-		void checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem);
+		bool checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem);
 		void draw(IEnemy2D* enemy);
 
 	public:

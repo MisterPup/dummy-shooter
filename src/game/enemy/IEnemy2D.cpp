@@ -17,6 +17,7 @@ IEnemy2D::IEnemy2D()
 	moveBy = 0.15f;
 	rotateBy = 10.0f;
 	distanceFromPlayerToReach = 2.0f;
+	shape = 0;
 }
 
 IEnemy2D::~IEnemy2D()
@@ -32,6 +33,7 @@ IEnemy2D::IEnemy2D(const IEnemy2D& other)
 	moveBy = other.moveBy;
 	rotateBy = other.rotateBy;
 	distanceFromPlayerToReach = other.distanceFromPlayerToReach;
+	shape = other.getShape()->clone();
 }
 
 IEnemy2D& IEnemy2D::operator =(const IEnemy2D& other)
@@ -43,6 +45,7 @@ IEnemy2D& IEnemy2D::operator =(const IEnemy2D& other)
 	moveBy = other.moveBy;
 	rotateBy = other.rotateBy;
 	distanceFromPlayerToReach = other.distanceFromPlayerToReach;
+	shape = other.getShape()->clone();
 
 	return *this;
 }
@@ -149,4 +152,14 @@ float IEnemy2D::getDistanceFromPlayerToReach() const
 void IEnemy2D::setDistanceFromPlayerToReach(float distanceFromPlayerToReach)
 {
 	this->distanceFromPlayerToReach = distanceFromPlayerToReach;
+}
+
+IShape2D* IEnemy2D::getShape() const
+{
+	return shape;
+}
+
+void IEnemy2D::setShape(IShape2D* shape)
+{
+	this->shape = shape->clone();
 }

@@ -47,12 +47,23 @@ EnemyManager& EnemyManager::operator =(const EnemyManager& other)
 
 void EnemyManager::init()
 {
-	maxNumEnemies = 2;
+	maxNumEnemies = 1;
 	srand(time(NULL));
 }
 
 void EnemyManager::manage(Player2DSystem playerSystem, Bullet2DSystem bulletSystem)
 {
+	for(unsigned int i = 0; i < enemies.size(); i++)
+	{
+		IEnemy2D* enemy = enemies.at(i);
+		bool hit = checkIfHit(enemy, bulletSystem);
+		if(hit)
+		{
+			enemies.erase(enemies.begin() + i);
+			i--;
+		}
+	}
+
 	bool mustCreate = checkIfNewMustCreated();
 	if(mustCreate)
 		createEnemy();
@@ -65,22 +76,22 @@ void EnemyManager::manage(Player2DSystem playerSystem, Bullet2DSystem bulletSyst
 	}
 }
 
-void EnemyManager::checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem)
+bool EnemyManager::checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem)
 {
-	/*vector<Bullet2D> bullets = bulletSystem.getBullets();
-	for(int i = 0; i < bullets.size(); i++)
+	vector<Bullet2D> bullets = bulletSystem.getBullets();
+	for(unsigned int i = 0; i < bullets.size(); i++)
 	{
 		Bullet2D curBullet = bullets.at(i);
 
 		float bulletPosX = curBullet.getPosX();
 		float bulletPosY = curBullet.getPosY();
-		float bulletDimY = curBullet.getBodyDimY();
 
-		float enemyPosX = enemy->getPosX();
-		float enemyPosY = enemy->getPosY();
+		bool hit = enemy->getShape()->isInside(enemy->getPosX(), enemy->getPosY(), bulletPosX, bulletPosY);
 
-
-	}*/
+		if(hit)
+			return true;
+	}
+	return false;
 }
 
 //TODO simple stub. Al momento è ridondante

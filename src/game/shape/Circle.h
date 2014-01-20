@@ -8,7 +8,10 @@
 #ifndef CIRCLE_H_
 #define CIRCLE_H_
 
-class Circle {
+#include "../shape/IShape2D.h"
+
+class Circle: public IShape2D
+{
 
 	private:
 		float radius;
@@ -22,7 +25,11 @@ class Circle {
 		Circle(const Circle& other);
 		Circle& operator=(const Circle& other);
 
-		void draw();
+		virtual void draw();
+		virtual bool isInside(float shapeX, float shapeY, float pointX, float pointY) const;
+
+		virtual IShape2D* create() const; // Virtual constructor (creation)
+		virtual IShape2D* clone() const;  // Virtual constructor (copying)
 
 		int getNumSegments() const;
 		void setNumSegments(int numSegments);

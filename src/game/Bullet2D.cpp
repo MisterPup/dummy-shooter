@@ -26,7 +26,7 @@ Bullet2D::Bullet2D(float bodyDimY, float shootPosX, float shootPosY, float shoot
 Bullet2D::~Bullet2D()
 {
 }
-
+//posizione Y nelle coordinate del mondo della fine del proiettile
 float Bullet2D::getPosY() const
 {
 
@@ -39,6 +39,7 @@ float Bullet2D::getPosY() const
 	return bulletPosY;
 }
 
+//posizione X nelle coordinate del mondo  della fine del proiettile
 float Bullet2D::getPosX() const
 {
 	float bodyPosY1 = bulletPos;
