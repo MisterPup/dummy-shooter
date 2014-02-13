@@ -6,7 +6,7 @@
  */
 
 #include "SPActionListener.h"
-#include "../../Renderer.h"
+#include "../../renderer/Renderer.h"
 #include <iostream>
 
 using namespace std;

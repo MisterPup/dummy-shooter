@@ -6,7 +6,7 @@
  */
 
 #include "Bullet2DSystem.h"
-#include "Player2D.h"
+#include "../player/Player2D.h"
 #include <iostream>
 
 using namespace std;

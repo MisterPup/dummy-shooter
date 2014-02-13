@@ -9,9 +9,9 @@
 #define ENEMYMANAGER_H_
 
 #include "IEnemy2D.h"
-#include "../World2D.h"
-#include "../Player2DSystem.h"
-#include "../Bullet2DSystem.h"
+#include "../world/World2D.h"
+#include "../player/Player2DSystem.h"
+#include "../bullet/Bullet2DSystem.h"
 #include <vector>
 
 using namespace std;

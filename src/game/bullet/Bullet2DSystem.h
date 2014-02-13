@@ -8,7 +8,7 @@
 #ifndef BULLET2DSYSTEM_H_
 #define BULLET2DSYSTEM_H_
 
-#include "World2D.h"
+#include "../world/World2D.h"
 #include "Bullet2D.h"
 #include <vector>
 

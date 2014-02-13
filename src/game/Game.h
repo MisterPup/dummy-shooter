@@ -8,10 +8,10 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include "../IRenderable.h"
-#include "World2D.h"
-#include "Bullet2DSystem.h"
-#include "Player2DSystem.h"
+#include "../renderer/IRenderable.h"
+#include "world/World2D.h"
+#include "bullet/Bullet2DSystem.h"
+#include "player/Player2DSystem.h"
 #include "enemy/EnemyManager.h"
 
 class Game: public IRenderable

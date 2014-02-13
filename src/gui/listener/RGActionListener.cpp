@@ -6,7 +6,7 @@
  */
 
 #include "RGActionListener.h"
-#include "../../Renderer.h"
+#include "../../renderer/Renderer.h"
 
 RGActionListener::RGActionListener()
 {

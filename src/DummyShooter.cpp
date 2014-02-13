@@ -2,7 +2,7 @@
 #include <GL/glut.h>
 #include <string.h>
 #include "tool/Utility.h"
-#include "Renderer.h"
+#include "renderer/Renderer.h"
 #include "input/Mouse.h"
 #include "input/Keyboard.h"
 

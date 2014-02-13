@@ -8,8 +8,8 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
-#include "gui/Gui.h"
-#include "game/Game.h"
+#include "../gui/Gui.h"
+#include "../game/Game.h"
 #include "IRenderable.h"
 
 class Renderer {

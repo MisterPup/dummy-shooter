@@ -6,7 +6,7 @@
  */
 
 #include "Keyboard.h"
-#include "../Renderer.h"
+#include "../renderer/Renderer.h"
 #include <GL/glut.h>
 #include <math.h>
 #include <iostream>

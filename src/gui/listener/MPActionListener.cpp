@@ -6,7 +6,7 @@
  */
 
 #include "MPActionListener.h"
-#include "../../Renderer.h"
+#include "../../renderer/Renderer.h"
 
 MPActionListener::MPActionListener()
 {

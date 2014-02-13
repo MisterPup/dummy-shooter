@@ -5,7 +5,7 @@
  *      Author: misterpup
  */
 
-#include "../Renderer.h"
+#include "../renderer/Renderer.h"
 #include "Mouse.h"
 #include "../tool/Utility.h"
 #include <GL/glut.h>

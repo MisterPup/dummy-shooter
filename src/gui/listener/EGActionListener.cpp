@@ -6,7 +6,7 @@
  */
 
 #include "EGActionListener.h"
-#include "../../Renderer.h"
+#include "../../renderer/Renderer.h"
 
 EGActionListener::EGActionListener()
 {

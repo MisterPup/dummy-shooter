@@ -6,7 +6,7 @@
  */
 
 #include "Client.h"
-#include "Renderer.h"
+#include "../renderer/Renderer.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>

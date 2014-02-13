@@ -6,7 +6,7 @@
  */
 
 #include "Player2DSystem.h"
-#include "OutsideWorld.h"
+#include "../world/OutsideWorld.h"
 
 Player2DSystem::Player2DSystem()
 {

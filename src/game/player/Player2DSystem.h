@@ -8,7 +8,7 @@
 #ifndef PLAYER2DSYSTEM_H_
 #define PLAYER2DSYSTEM_H_
 
-#include "World2D.h"
+#include "../world/World2D.h"
 #include "Player2D.h"
 #include <math.h>
 

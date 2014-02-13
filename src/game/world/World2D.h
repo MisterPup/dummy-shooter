@@ -9,7 +9,7 @@
 #define WORLD2D_H_
 
 #include "OutsideWorld.h"
-#include "Player2D.h"
+#include "../player/Player2D.h"
 #include <GL/glut.h>
 
 class World2D

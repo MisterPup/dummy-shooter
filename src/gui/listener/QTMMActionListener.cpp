@@ -6,7 +6,7 @@
  */
 
 #include "QTMMActionListener.h"
-#include "../../Renderer.h"
+#include "../../renderer/Renderer.h"
 
 QTMMActionListener::QTMMActionListener()
 {

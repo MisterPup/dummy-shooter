@@ -8,8 +8,8 @@
 #ifndef GUI_H_
 #define GUI_H_
 
-#include "../IRenderable.h"
-#include "MainMenu.h"
+#include "../renderer/IRenderable.h"
+#include "mainmenu/MainMenu.h"
 #include <string>
 
 using namespace std;
