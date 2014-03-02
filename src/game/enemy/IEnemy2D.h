@@ -9,10 +9,12 @@
 #define IENEMY2D_H_
 
 #include "../shape/IShape2D.h"
+#include "ai/IEnemyAI.h"
+
+class IEnemyAI;
 
 class IEnemy2D
 {
-
 	private:
 
 		float posX;
@@ -36,6 +38,8 @@ class IEnemy2D
 		void rotate(bool right);
 
 		virtual void draw() = 0;
+		virtual IEnemy2D* create () const = 0; // Virtual constructor (creation)
+		virtual IEnemy2D* clone () const = 0; // Virtual constructor (copying)
 
 		float getDegRotation() const;
 		void setDegRotation(float degRotation);

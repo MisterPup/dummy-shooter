@@ -25,6 +25,16 @@ EnemyCircle::~EnemyCircle()
 
 }
 
+IEnemy2D* EnemyCircle::create() const
+{
+	return new EnemyCircle();
+}
+
+IEnemy2D* EnemyCircle::clone() const
+{
+	return new EnemyCircle(*this);
+}
+
 void EnemyCircle::draw()
 {
 	glPushMatrix();
@@ -33,3 +43,17 @@ void EnemyCircle::draw()
 		getShape()->draw();
 	glPopMatrix();
 }
+
+void EnemyCircle::takeDecision(IEnemy2D* enemy)
+{
+}
+
+void EnemyCircle::move(IEnemy2D* enemy)
+{
+}
+
+void EnemyCircle::shoot(IEnemy2D* enemy)
+{
+}
+
+

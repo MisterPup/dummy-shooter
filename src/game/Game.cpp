@@ -36,8 +36,8 @@ Game* Game::getInstance()
 
 void Game::initObject()
 {
-	const float worldSizeX = 10.0f;
-	const float worldSizeY = 8.0f;
+	const float worldSizeX = 20.0f;
+	const float worldSizeY = 10.0f;
 
 	World2D tempWorld(worldSizeX, worldSizeY);
 	world = tempWorld;

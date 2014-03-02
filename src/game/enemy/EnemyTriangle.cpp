@@ -29,6 +29,16 @@ EnemyTriangle::~EnemyTriangle()
 
 }
 
+IEnemy2D* EnemyTriangle::create() const
+{
+	return new EnemyTriangle();
+}
+
+IEnemy2D* EnemyTriangle::clone() const
+{
+	return new EnemyTriangle(*this);
+}
+
 void EnemyTriangle::draw()
 {
 	glPushMatrix();

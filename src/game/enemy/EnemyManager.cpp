@@ -47,7 +47,7 @@ EnemyManager& EnemyManager::operator =(const EnemyManager& other)
 
 void EnemyManager::init()
 {
-	maxNumEnemies = 1;
+	maxNumEnemies = 3;
 	srand(time(NULL));
 }
 
@@ -107,8 +107,14 @@ void EnemyManager::createEnemy()
 {
 	while(enemies.size() < maxNumEnemies)
 	{
-		//rand() per scegliere fra tipi di nemici da creare
-		IEnemy2D* enemy = new EnemyTriangle();
+		int enemyType = (int)(rand()%2); //0 e 1
+
+		IEnemy2D* enemy;
+		if(enemyType == 0)
+			enemy = new EnemyTriangle();
+		else
+			enemy = new EnemyCircle();
+
 		enemies.push_back(enemy);
 
 		choosePositionToCreate(enemy);

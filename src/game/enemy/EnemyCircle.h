@@ -19,6 +19,13 @@ class EnemyCircle: public IEnemy2D
 		EnemyCircle();
 		virtual ~EnemyCircle();
 
+		virtual IEnemy2D* create () const;
+		virtual IEnemy2D* clone () const;
+
+		virtual void takeDecision(IEnemy2D* enemy);
+		virtual void move(IEnemy2D* enemy);
+		virtual void shoot(IEnemy2D* enemy);
+
 		void draw();
 };
 

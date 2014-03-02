@@ -19,6 +19,9 @@ class EnemyTriangle: public IEnemy2D
 		EnemyTriangle();
 		virtual ~EnemyTriangle();
 
+		virtual IEnemy2D* create () const;
+		virtual IEnemy2D* clone () const;
+
 		virtual void draw();
 };
 

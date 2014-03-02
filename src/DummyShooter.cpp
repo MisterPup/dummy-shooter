@@ -5,17 +5,18 @@
 #include "renderer/Renderer.h"
 #include "input/Mouse.h"
 #include "input/Keyboard.h"
+#include "game/generic/IDrawable.h"
 
 using namespace std;
 
-int prevScreenX = 640;//1280;
-int prevScreenY = 480;//720;
+int prevScreenX = 1280;
+int prevScreenY = 720;
 int curScreenX = prevScreenX;
 int curScreenY = prevScreenY;
 
 //Update time
 int FPS = 30;
-float updateTime = 1000/(float)FPS; //FPS frame per second drawn
+float updateTimeMsec = 1000/(float)FPS; //FPS frame per second drawn
 
 Renderer* renderer;
 
@@ -41,7 +42,7 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(drawScene);
 	//glutIdleFunc(drawScene);
-	glutTimerFunc(updateTime, update, 0);
+	glutTimerFunc(updateTimeMsec, update, 0);
 
 	//Set handler functions for drawing, keypresses, and window resizes
 	glutKeyboardFunc(Keyboard::handleStdKeyPress);
@@ -113,6 +114,7 @@ void handleResize(int w, int h)
 //Called every 1000/FPS milliseconds
 void update(int value)
 {
+	IDrawable::updateTime = updateTimeMsec/1000; //back to seconds
 	glutPostRedisplay();
-	glutTimerFunc(updateTime, update, 0);
+	glutTimerFunc(updateTimeMsec, update, 0);
 }
