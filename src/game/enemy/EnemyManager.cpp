@@ -47,7 +47,7 @@ EnemyManager& EnemyManager::operator =(const EnemyManager& other)
 
 void EnemyManager::init()
 {
-	maxNumEnemies = 3;
+	maxNumEnemies = 1;
 	srand(time(NULL));
 }
 
@@ -57,6 +57,7 @@ void EnemyManager::manage(Player2DSystem playerSystem, Bullet2DSystem bulletSyst
 	{
 		IEnemy2D* enemy = enemies.at(i);
 		bool hit = checkIfHit(enemy, bulletSystem);
+		//TODO eliminare anche il proiettile
 		if(hit)
 		{
 			enemies.erase(enemies.begin() + i);
@@ -110,9 +111,9 @@ void EnemyManager::createEnemy()
 		int enemyType = (int)(rand()%2); //0 e 1
 
 		IEnemy2D* enemy;
-		if(enemyType == 0)
+		/*if(enemyType == 0)
 			enemy = new EnemyTriangle();
-		else
+		else*/
 			enemy = new EnemyCircle();
 
 		enemies.push_back(enemy);

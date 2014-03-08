@@ -8,6 +8,9 @@
 #ifndef ISHAPE2D_H_
 #define ISHAPE2D_H_
 
+#include <iostream>
+using namespace std;
+
 class IShape2D
 {
 	public:
@@ -17,6 +20,12 @@ class IShape2D
 		IShape2D& operator=(const IShape2D& other);
 
 		virtual void draw() = 0;
+
+		/*
+		 * Check if the point in (pointX, pointY) is inside the shape centered in (shapeX, shapeY)
+		 * @shapeXY: coordinates of the center of the shape
+		 * @pointXY: coordinates of the point to check if inside the shape
+		 */
 		virtual bool isInside(float shapeX, float shapeY, float pointX, float pointY) const = 0;
 
 		virtual IShape2D* create () const = 0; // Virtual constructor (creation)

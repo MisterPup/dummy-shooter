@@ -60,9 +60,16 @@ void Circle::draw()
 	glEnd();
 }
 
-//TODO simple stub
 bool Circle::isInside(float shapeX, float shapeY, float pointX, float pointY) const
 {
+	//coordinate translation
+	float newPointX = pointX - shapeX;
+	float newPointY = pointY - shapeY;
+
+	//check that x^2 + y^2 <= radius
+	if(pow(newPointX, 2) + pow(newPointY, 2) <= radius)
+		return true;
+
 	return false;
 }
 

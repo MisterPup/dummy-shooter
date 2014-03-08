@@ -81,11 +81,13 @@ void drawScene()
 				0.0, 0.0, 0.0,		// center
 				0.0, 1.0, 0.0);		// vector UP
 
+	/*glPushMatrix();
+		glTranslatef(0, 0, 0);
+		Utility::drawAxis(10, 10, 10);
+	glPopMatrix();*/
+
 	Keyboard::keyOperation();
 	renderer->draw();
-
-
-
 	glutSwapBuffers();
 }
 
