@@ -12,9 +12,11 @@
 
 using namespace std;
 
-class IRenderable
-{
+class IRenderable {
+	private:
+
 	public:
+
 		IRenderable();
 		virtual ~IRenderable();
 

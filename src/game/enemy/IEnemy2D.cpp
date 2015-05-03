@@ -14,7 +14,7 @@ IEnemy2D::IEnemy2D()
 	posY = 0.0f;
 	posZ = 0.0f;
 	degRotation = 0.0f;
-	moveBy = 0.15f;
+	moveBy = 7.0f;
 	rotateBy = 10.0f;
 	distanceFromPlayerToReach = 2.0f;
 	shape = 0;
@@ -52,11 +52,12 @@ IEnemy2D& IEnemy2D::operator =(const IEnemy2D& other)
 
 void IEnemy2D::move(bool forward)
 {
+	float updateTime = IDrawable::updateTime;
 	float radRotation = 2*M_PI*degRotation/360; //rotation in radiants
 
 	//radRotation is negative when you press LEFT
-	float toMoveX = moveBy*cos(M_PI/2 + radRotation);
-	float toMoveY = moveBy*sin(M_PI/2 + radRotation);
+	float toMoveX = moveBy*updateTime*cos(M_PI/2 + radRotation);
+	float toMoveY = moveBy*updateTime*sin(M_PI/2 + radRotation);
 
 	if(forward)
 	{

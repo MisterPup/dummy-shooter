@@ -17,13 +17,13 @@ Renderer::Renderer()
 {
 	gui = Gui::getInstance();
 	game = Game::getInstance();
-	renderable = gui;
+	currentRendered = gui;
 }
 
 Renderer::~Renderer()
 {
 	delete instance;
-	//gui e game vengono eliminati dai relativi distruttori, essendoci un solo oggetto singleton
+	//gui and game objects are deleted by their destructors
 }
 
 Renderer* Renderer::getInstance()
@@ -34,31 +34,31 @@ Renderer* Renderer::getInstance()
 	return instance;
 }
 
-Gui* Renderer::getGui()
+Gui* Renderer::getGui() const
 {
 	return gui;
 }
 
-Game* Renderer::getGame()
+Game* Renderer::getGame() const
 {
 	return game;
 }
 
 void Renderer::changeToGui()
 {
-	renderable = gui;
+	currentRendered = gui;
 }
 void Renderer::changeToGame()
 {
-	renderable = game;
+	currentRendered = game;
 }
 
 void Renderer::changeToOther()
 {
-	if(renderable == gui)
-		renderable = game;
+	if(currentRendered == gui)
+		currentRendered = game;
 	else
-		renderable = gui;
+		currentRendered = gui;
 }
 
 void Renderer::exitGame()
@@ -68,23 +68,27 @@ void Renderer::exitGame()
 
 void Renderer::leftClick(float x, float y)
 {
-	renderable->leftClick(x, y);
+	currentRendered->leftClick(x, y);
 }
 
 void Renderer::pressStandardKey(int key)
 {
-	if(key == 27) //ESC - se sono in game, vado nel relativo menù
+	if(key == 27) //ESC - if in game, go to menu
 		changeToGui();
 	else
-		renderable->pressStandardKey(key);
+		currentRendered->pressStandardKey(key);
 }
 
 void Renderer::pressSpecialKey(int key)
 {
-	renderable->pressSpecialKey(key);
+	currentRendered->pressSpecialKey(key);
 }
 
 void Renderer::draw()
 {
-	renderable->draw();
+	currentRendered->draw();
+}
+
+void Renderer::setUpdateTime(float updateTime) {
+	IDrawable::updateTime = updateTime;
 }

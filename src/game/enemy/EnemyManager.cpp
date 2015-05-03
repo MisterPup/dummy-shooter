@@ -47,21 +47,23 @@ EnemyManager& EnemyManager::operator =(const EnemyManager& other)
 
 void EnemyManager::init()
 {
+	enemies.resize(0);
 	maxNumEnemies = 1;
 	srand(time(NULL));
 }
 
-void EnemyManager::manage(Player2DSystem playerSystem, Bullet2DSystem bulletSystem)
+void EnemyManager::manage(Player2DSystem* playerSystem, Bullet2DSystem* bulletSystem)
 {
-	for(unsigned int i = 0; i < enemies.size(); i++)
+	for(int i = enemies.size() - 1; i >= 0; i--)
 	{
 		IEnemy2D* enemy = enemies.at(i);
-		bool hit = checkIfHit(enemy, bulletSystem);
-		//TODO eliminare anche il proiettile
-		if(hit)
+		int bulletHitIndex = checkIfHit(enemy, *bulletSystem);
+
+		//enemy hit
+		if(bulletHitIndex != -1)
 		{
 			enemies.erase(enemies.begin() + i);
-			i--;
+			bulletSystem->destroyBullet(bulletHitIndex);
 		}
 	}
 
@@ -72,12 +74,12 @@ void EnemyManager::manage(Player2DSystem playerSystem, Bullet2DSystem bulletSyst
 	for(unsigned int i = 0; i < enemies.size(); i++)
 	{
 		IEnemy2D* enemy = enemies.at(i);
-		changeAndMoveTowardObjective(enemy, playerSystem);
+		changeAndMoveTowardObjective(enemy, *playerSystem);
 		enemy->draw();
 	}
 }
 
-bool EnemyManager::checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem)
+int EnemyManager::checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem)
 {
 	vector<Bullet2D> bullets = bulletSystem.getBullets();
 	for(unsigned int i = 0; i < bullets.size(); i++)
@@ -90,9 +92,9 @@ bool EnemyManager::checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem)
 		bool hit = enemy->getShape()->isInside(enemy->getPosX(), enemy->getPosY(), bulletPosX, bulletPosY);
 
 		if(hit)
-			return true;
+			return i;
 	}
-	return false;
+	return -1;
 }
 
 //TODO simple stub. Al momento è ridondante

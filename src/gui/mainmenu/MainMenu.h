@@ -23,6 +23,9 @@ class MainMenu
 
 		static float distanceBetweenCenterOfButton;
 
+		/**
+		 * Get the Y coordinate of the top of the first button
+		 */
 		float getStartingPositionToDraw();
 
 	public:

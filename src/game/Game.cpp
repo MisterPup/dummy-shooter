@@ -50,7 +50,7 @@ void Game::initObject()
 	//-------------------------------------------------------//
 
 	float bulletDimY = 0.1f;
-	int numBullets = 5;
+	int numBullets = 1;
 
 	Bullet2DSystem tempBulletSystem(world, numBullets, bulletDimY);
 	bulletSystem = tempBulletSystem;
@@ -157,7 +157,7 @@ void Game::drawSinglePlayer()
 	world.draw();
 	playerSystem.draw();
 	bulletSystem.draw();
-	enemyManager.manage(playerSystem, bulletSystem);
+	enemyManager.manage(&playerSystem, &bulletSystem);
 }
 
 void Game::drawMultiPlayer()

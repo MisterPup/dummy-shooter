@@ -7,7 +7,7 @@
 
 #include "IDrawable.h"
 
-float IDrawable::updateTime = 0;
+float IDrawable::updateTime = 1;
 
 IDrawable::IDrawable() {
 

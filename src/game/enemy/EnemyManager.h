@@ -29,7 +29,12 @@ class EnemyManager
 		void createEnemy();
 		void choosePositionToCreate(IEnemy2D* enemy);
 		void changeAndMoveTowardObjective(IEnemy2D* enemy, Player2DSystem playerSystem);
-		bool checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem);
+
+		/**
+		 * Check if the enemy has been hit by a bullet and
+		 * return the index of the bullet
+		 */
+		int checkIfHit(IEnemy2D* enemy, Bullet2DSystem bulletSystem);
 		void draw(IEnemy2D* enemy);
 
 	public:
@@ -40,7 +45,7 @@ class EnemyManager
 		EnemyManager(const EnemyManager& other);
 		EnemyManager& operator=(const EnemyManager& other);
 
-		void manage(Player2DSystem playerSystem, Bullet2DSystem bulletSystem);
+		void manage(Player2DSystem* playerSystem, Bullet2DSystem* bulletSystem);
 };
 
 #endif /* ENEMYMANAGER_H_ */

@@ -22,20 +22,35 @@ class Bullet2DSystem {
 		vector<Bullet2D> bullets;
 		int numBullets;
 		float bulletDimY;
-		int bulletsShoot;
 
 	public:
 
 		Bullet2DSystem();
-		Bullet2DSystem(World2D world, int numBullets, float bulletDimY);
+		Bullet2DSystem(const World2D& world, int numBullets, float bulletDimY);
 		Bullet2DSystem& operator=(const Bullet2DSystem& other);
 		virtual ~Bullet2DSystem();
 
-		void shoot(Player2D player);
-		void draw();
-		bool checkInsideWorld(Bullet2D bullet, int indexInBullets);
-
 		const vector<Bullet2D>& getBullets() const;
+
+		/**
+		 * destroy bullet at specified index
+		 */
+		void destroyBullet(int index);
+
+		/**
+		 * shoot another bullet if available
+		 */
+		void shoot(Player2D player);
+
+		/**
+		 * Draw each bullet if inside the world, else remove it from bullets
+		 */
+		void draw();
+
+		/**
+		 * Check if the bullet is inside the world
+		 */
+		bool checkInsideWorld(const Bullet2D& bullet, int indexInBullets);
 };
 
 #endif /* BULLET2DSYSTEM_H_ */

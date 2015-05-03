@@ -11,7 +11,7 @@
 class IDrawable {
 
 	public:
-		static float updateTime;
+		static float updateTime; //time between current and previous frame
 		IDrawable();
 		virtual ~IDrawable();
 };

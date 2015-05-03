@@ -9,11 +9,12 @@
 #define IENEMY2D_H_
 
 #include "../shape/IShape2D.h"
+#include "../../renderer/IDrawable.h"
 #include "ai/IEnemyAI.h"
 
 class IEnemyAI;
 
-class IEnemy2D
+class IEnemy2D: public IDrawable
 {
 	private:
 

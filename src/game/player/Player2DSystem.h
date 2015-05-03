@@ -23,8 +23,8 @@ class Player2DSystem
 	public:
 
 		Player2DSystem();
-		Player2DSystem(World2D world);
-		Player2DSystem(World2D world, Player2D player);
+		Player2DSystem(const World2D& world);
+		Player2DSystem(const World2D& world, const Player2D& player);
 		virtual ~Player2DSystem();
 		Player2DSystem& operator=(const Player2DSystem& other);
 

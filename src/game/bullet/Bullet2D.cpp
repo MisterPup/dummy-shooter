@@ -15,7 +15,7 @@ Bullet2D::Bullet2D(float bodyDimY, float shootPosX, float shootPosY, float shoot
 {
 	this->bodyDimY = bodyDimY;
 	bulletPos = 0;
-	bulletSpeed = 0.25f;
+	bulletSpeed = 13.0f;
 
 	this->shootPosX = shootPosX;
 	this->shootPosY = shootPosY;
@@ -53,6 +53,8 @@ float Bullet2D::getPosX() const
 
 void Bullet2D::draw()
 {
+	float updateTime = IDrawable::updateTime;
+
 	float bodyPosX = 0.0f;
 	float bodyPosY1 = bulletPos;
 	float bodyPosY2 = bodyPosY1 + bodyDimY;
@@ -69,7 +71,7 @@ void Bullet2D::draw()
 		glEnd();
 	glPopMatrix();
 
-	bulletPos += bulletSpeed;
+	bulletPos += bulletSpeed*updateTime;
 }
 
 float Bullet2D::getBodyDimY() const

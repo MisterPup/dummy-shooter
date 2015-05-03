@@ -10,24 +10,27 @@
 
 #include "../gui/Gui.h"
 #include "../game/Game.h"
+#include "IDrawable.h"
 #include "IRenderable.h"
 
 class Renderer {
+	private:
+		static Renderer* instance;
+		Gui* gui;
+		Game* game;
+		IRenderable* currentRendered; //current rendered object (gui or game)
 
-	static Renderer* instance;
-	Gui* gui;
-	Game* game;
-	IRenderable* renderable;
-
-	Renderer();
+		Renderer();
 
 	public:
 
 		virtual ~Renderer();
 		static Renderer* getInstance();
 
-		Gui* getGui();
-		Game* getGame();
+		void setUpdateTime(float updateTime);
+
+		Gui* getGui() const;
+		Game* getGame() const;
 
 		void changeToGui();
 		void changeToGame();

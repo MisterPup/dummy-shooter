@@ -13,7 +13,7 @@ Player2DSystem::Player2DSystem()
 
 }
 
-Player2DSystem::Player2DSystem(World2D world)
+Player2DSystem::Player2DSystem(const World2D& world)
 {
 	this->world = world;
 
@@ -24,7 +24,7 @@ Player2DSystem::Player2DSystem(World2D world)
 	player = tempPlayer;
 }
 
-Player2DSystem::Player2DSystem(World2D world, Player2D player)
+Player2DSystem::Player2DSystem(const World2D& world, const Player2D& player)
 {
 	this->world = world;
 	this->player = player;

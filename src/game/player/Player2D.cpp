@@ -20,7 +20,7 @@ Player2D::Player2D()
 	curPosY = 0.0f;
 	curPosZ = 0.0f;
 
-	moveBy = 0.15f;
+	moveBy = 7.0f;
 	rotateBy = 10.0f;
 
 	teleport = true;
@@ -39,7 +39,7 @@ Player2D::Player2D(float base, float height)
 	curPosY = 0.0f;
 	curPosZ = 0.0f;
 
-	moveBy = 0.15f;
+	moveBy = 7.0f;
 	rotateBy = 10.0f;
 
 	teleport = true;
@@ -90,11 +90,12 @@ Player2D::Player2D(const Player2D& other)
 
 void Player2D::move(bool forward)
 {
+	float updateTime = IDrawable::updateTime;
 	float radRotation = 2*M_PI*degRotation/360; //rotation in radiants
 
 	//radRotation is negative when you press LEFT
-	float toMoveX = moveBy*cos(M_PI/2 + radRotation);
-	float toMoveY = moveBy*sin(M_PI/2 + radRotation);
+	float toMoveX = moveBy*updateTime*cos(M_PI/2 + radRotation);
+	float toMoveY = moveBy*updateTime*sin(M_PI/2 + radRotation);
 
 	if(forward)
 	{
@@ -145,47 +146,47 @@ void Player2D::drawTriangle()
 	glEnd();
 }
 
-float Player2D::getBase()
+float Player2D::getBase() const
 {
 	return base;
 }
 
-float Player2D::getHeight()
+float Player2D::getHeight() const
 {
 	return height;
 }
 
-float Player2D::getCurPosX()
+float Player2D::getCurPosX() const
 {
 	return curPosX;
 }
 
-float Player2D::getCurPosY()
+float Player2D::getCurPosY() const
 {
 	return curPosY;
 }
 
-float Player2D::getCurPosZ()
+float Player2D::getCurPosZ() const
 {
 	return curPosZ;
 }
 
-float Player2D::getDegRotation()
+float Player2D::getDegRotation() const
 {
 	return degRotation;
 }
 
-float Player2D::getMoveBy()
+float Player2D::getMoveBy() const
 {
 	return moveBy;
 }
 
-float Player2D::getRotateBy()
+float Player2D::getRotateBy() const
 {
 	return rotateBy;
 }
 
-bool Player2D::getTeleport()
+bool Player2D::getTeleport() const
 {
 	return teleport;
 }

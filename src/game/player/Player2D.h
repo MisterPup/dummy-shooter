@@ -8,7 +8,9 @@
 #ifndef PLAYER2D_H_
 #define PLAYER2D_H_
 
-class Player2D
+#include "../../renderer/IDrawable.h"
+
+class Player2D: public IDrawable
 {
 	private:
 
@@ -40,19 +42,19 @@ class Player2D
 		void draw();
 		void drawTriangle();
 
-		float getBase();
-		float getHeight();
+		float getBase() const;
+		float getHeight() const;
 
-		float getCurPosX();
-		float getCurPosY();
-		float getCurPosZ();
+		float getCurPosX() const;
+		float getCurPosY() const;
+		float getCurPosZ() const;
 
-		float getDegRotation();
+		float getDegRotation() const;
 
-		float getMoveBy();
-		float getRotateBy();
+		float getMoveBy() const;
+		float getRotateBy() const;
 
-		bool getTeleport();
+		bool getTeleport() const;
 
 		void setCurPosX(float curPosX);
 		void setCurPosY(float curPosY);

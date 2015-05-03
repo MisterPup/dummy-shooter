@@ -5,18 +5,18 @@
 #include "renderer/Renderer.h"
 #include "input/Mouse.h"
 #include "input/Keyboard.h"
-#include "game/generic/IDrawable.h"
 
 using namespace std;
 
-int prevScreenX = 1280;
-int prevScreenY = 720;
+int prevScreenX = 1024;
+int prevScreenY = 768;
 int curScreenX = prevScreenX;
 int curScreenY = prevScreenY;
 
 //Update time
 int FPS = 30;
 float updateTimeMsec = 1000/(float)FPS; //FPS frame per second drawn
+int oldTimeSinceStart = 0; //in order to calculate delta time each frame
 
 Renderer* renderer;
 
@@ -25,6 +25,7 @@ void initObject();
 void drawScene();
 void handleResize(int w, int h);
 void update(int value);
+float getDeltaTime();
 
 int main(int argc, char** argv)
 {
@@ -87,6 +88,7 @@ void drawScene()
 	glPopMatrix();*/
 
 	Keyboard::keyOperation();
+	renderer->setUpdateTime(getDeltaTime());
 	renderer->draw();
 	glutSwapBuffers();
 }
@@ -116,7 +118,17 @@ void handleResize(int w, int h)
 //Called every 1000/FPS milliseconds
 void update(int value)
 {
-	IDrawable::updateTime = updateTimeMsec/1000; //back to seconds
 	glutPostRedisplay();
 	glutTimerFunc(updateTimeMsec, update, 0);
+}
+
+/**
+ * Return delta time in  between current and previous frame
+ */
+float getDeltaTime()
+{
+	int timeSinceStart = glutGet(GLUT_ELAPSED_TIME);
+	int deltaTime = timeSinceStart - oldTimeSinceStart;
+	oldTimeSinceStart = timeSinceStart;
+	return (float)deltaTime/1000;
 }

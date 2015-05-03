@@ -42,6 +42,7 @@ IEnemy2D* EnemyTriangle::clone() const
 void EnemyTriangle::draw()
 {
 	glPushMatrix();
+		glColor3f(1.0, 1.0, 0.0);
 		glTranslatef(getPosX(), getPosY(), getPosZ());
 		glRotatef(getDegRotation(), 0.0f, 0.0f, 1.0f);
 		getShape()->draw();
