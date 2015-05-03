@@ -28,10 +28,16 @@ class Player2D: public IDrawable
 
 		bool teleport;
 
+		void drawTriangle();
+
 	public:
 
+		static float MOVEBY;
+		static float ROTATEBY;
+		static float BASE;
+		static float HEIGHT;
+
 		Player2D();
-		Player2D(float base, float height);
 		virtual ~Player2D();
 		Player2D(const Player2D& other);
 		Player2D& operator=(const Player2D& other);
@@ -40,20 +46,15 @@ class Player2D: public IDrawable
 		void rotate(bool right);
 
 		void draw();
-		void drawTriangle();
 
 		float getBase() const;
 		float getHeight() const;
-
 		float getCurPosX() const;
 		float getCurPosY() const;
 		float getCurPosZ() const;
-
 		float getDegRotation() const;
-
 		float getMoveBy() const;
 		float getRotateBy() const;
-
 		bool getTeleport() const;
 
 		void setCurPosX(float curPosX);

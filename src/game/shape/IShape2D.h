@@ -22,9 +22,8 @@ class IShape2D
 		virtual void draw() = 0;
 
 		/*
-		 * Check if the point in (pointX, pointY) is inside the shape centered in (shapeX, shapeY)
-		 * @shapeXY: coordinates of the center of the shape
-		 * @pointXY: coordinates of the point to check if inside the shape
+		 * Check if the point in (pointX, pointY) is inside
+		 * the shape centered in (shapeX, shapeY)
 		 */
 		virtual bool isInside(float shapeX, float shapeY, float pointX, float pointY) const = 0;
 

@@ -9,10 +9,15 @@
 #include <GL/glut.h>
 #include <math.h>
 
+float Player2D::MOVEBY = 7.0f;
+float Player2D::ROTATEBY = 10.0f;
+float Player2D::BASE = 0.5f;
+float Player2D::HEIGHT = 0.5f;
+
 Player2D::Player2D()
 {
-	base = 0.5f;
-	height = 0.5f;
+	base = BASE;
+	height = HEIGHT;
 
 	degRotation = 0.0f;
 
@@ -20,31 +25,10 @@ Player2D::Player2D()
 	curPosY = 0.0f;
 	curPosZ = 0.0f;
 
-	moveBy = 7.0f;
-	rotateBy = 10.0f;
+	moveBy = MOVEBY;
+	rotateBy = ROTATEBY;
 
 	teleport = true;
-}
-
-Player2D::Player2D(float base, float height)
-{
-	//string label = "AdvancedPlayer";
-
-	this->base = base;
-	this->height = height;
-
-	degRotation = 0.0f;
-
-	curPosX = 0.0f;
-	curPosY = 0.0f;
-	curPosZ = 0.0f;
-
-	moveBy = 7.0f;
-	rotateBy = 10.0f;
-
-	teleport = true;
-
-	//objectLabel = "AdvancedPlayer";
 }
 
 Player2D& Player2D::operator=(const Player2D& other)

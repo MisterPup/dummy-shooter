@@ -16,12 +16,6 @@ Player2DSystem::Player2DSystem()
 Player2DSystem::Player2DSystem(const World2D& world)
 {
 	this->world = world;
-
-	float base = 0.5f;
-	float height = 0.5f;
-
-	Player2D tempPlayer(base, height);
-	player = tempPlayer;
 }
 
 Player2DSystem::Player2DSystem(const World2D& world, const Player2D& player)
